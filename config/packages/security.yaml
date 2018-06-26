@@ -24,7 +24,7 @@ security:
             pattern:    ^/api
             fos_oauth:  true
             stateless:  true
-            anonymous:  false # note that anonymous access is now enabled
+            anonymous:  true # note that anonymous access is now enabled
 
         main:
             anonymous: true
