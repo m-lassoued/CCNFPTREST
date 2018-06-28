@@ -15,57 +15,25 @@ class TypeAdresse
     /**
      * @var int
      *
-     * @ORM\Column(name="ID_TYPE_ADRESSE", type="integer", nullable=false)
+     * @ORM\Column(name="ID", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="SEQUENCE")
-     * @ORM\SequenceGenerator(sequenceName="TYPE_ADRESSE_ID_TYPE_ADRESSE_s", allocationSize=1, initialValue=1)
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $idTypeAdresse;
+    private $id;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="LIBELLE_TYPE_ADRESSE", type="string", length=32, nullable=true)
+     * @ORM\Column(name="LIBELLE", type="string", length=32, nullable=true)
      */
-    private $libelleTypeAdresse;
+    private $libelle;
 
-    /**
-     * @return int
-     */
-    public function getIdTypeAdresse(): int
-    {
-        return $this->idTypeAdresse;
-    }
-
-    /**
-     * @param int $idTypeAdresse
-     */
-    public function setIdTypeAdresse(int $idTypeAdresse): void
-    {
-        $this->idTypeAdresse = $idTypeAdresse;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getLibelleTypeAdresse(): ?string
-    {
-        return $this->libelleTypeAdresse;
-    }
-
-    /**
-     * @param null|string $libelleTypeAdresse
-     */
-    public function setLibelleTypeAdresse(?string $libelleTypeAdresse): void
-    {
-        $this->libelleTypeAdresse = $libelleTypeAdresse;
-    }
     /**
      * @return int
      */
     public function getId(): int
     {
-        return $this->idTypeAdresse;
+        return $this->id;
     }
 
     /**
@@ -73,6 +41,23 @@ class TypeAdresse
      */
     public function setId(int $id): void
     {
-        $this->idTypeAdresse = $id;
+        $this->id = $id;
     }
+
+    /**
+     * @return null|string
+     */
+    public function getLibelle(): ?string
+    {
+        return $this->libelle;
+    }
+
+    /**
+     * @param null|string $libelle
+     */
+    public function setLibelle(?string $libelle): void
+    {
+        $this->libelle = $libelle;
+    }
+
 }

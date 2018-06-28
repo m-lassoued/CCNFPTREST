@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Pph{% endblock %}
+
+{% block body %}
+    <h1>Edit Pph</h1>
+
+    {{ include('pph/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('pph_index') }}">back to list</a>
+
+    {{ include('pph/_delete_form.html.twig') }}
+{% endblock %}

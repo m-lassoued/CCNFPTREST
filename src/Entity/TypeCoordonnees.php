@@ -15,57 +15,25 @@ class TypeCoordonnees
     /**
      * @var int
      *
-     * @ORM\Column(name="ID_TYPE_COORDONNEES", type="integer", nullable=false)
+     * @ORM\Column(name="ID", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="SEQUENCE")
-     * @ORM\SequenceGenerator(sequenceName="TYPE_COORDONNEES_ID_TYPE_COORD", allocationSize=1, initialValue=1)
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $idTypeCoordonnees;
+    private $id;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="LIBELLE_TYPE_COORDONNEES", type="string", length=32, nullable=true)
+     * @ORM\Column(name="LIBELLE", type="string", length=50, nullable=true)
      */
-    private $libelleTypeCoordonnees;
+    private $libelle;
 
-    /**
-     * @return int
-     */
-    public function getIdTypeCoordonnees(): int
-    {
-        return $this->idTypeCoordonnees;
-    }
-
-    /**
-     * @param int $idTypeCoordonnees
-     */
-    public function setIdTypeCoordonnees(int $idTypeCoordonnees): void
-    {
-        $this->idTypeCoordonnees = $idTypeCoordonnees;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getLibelleTypeCoordonnees(): ?string
-    {
-        return $this->libelleTypeCoordonnees;
-    }
-
-    /**
-     * @param null|string $libelleTypeCoordonnees
-     */
-    public function setLibelleTypeCoordonnees(?string $libelleTypeCoordonnees): void
-    {
-        $this->libelleTypeCoordonnees = $libelleTypeCoordonnees;
-    }
     /**
      * @return int
      */
     public function getId(): int
     {
-        return $this->idTypeCoordonnees;
+        return $this->id;
     }
 
     /**
@@ -73,6 +41,23 @@ class TypeCoordonnees
      */
     public function setId(int $id): void
     {
-        $this->idTypeCoordonnees = $id;
+        $this->id = $id;
     }
+
+    /**
+     * @return null|string
+     */
+    public function getLibelle(): ?string
+    {
+        return $this->libelle;
+    }
+
+    /**
+     * @param null|string $libelle
+     */
+    public function setLibelle(?string $libelle): void
+    {
+        $this->libelle = $libelle;
+    }
+
 }

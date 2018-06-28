@@ -1,0 +1,122 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Pph{% endblock %}
+
+{% block body %}
+    <h1>Pph</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ pph.id }}</td>
+            </tr>
+            <tr>
+                <th>NomNaissance</th>
+                <td>{{ pph.nomNaissance }}</td>
+            </tr>
+            <tr>
+                <th>NomUsage</th>
+                <td>{{ pph.nomUsage }}</td>
+            </tr>
+            <tr>
+                <th>Prenom</th>
+                <td>{{ pph.prenom }}</td>
+            </tr>
+            <tr>
+                <th>DateNaissance</th>
+                <td>{{ pph.dateNaissance ? pph.dateNaissance|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>DateDeces</th>
+                <td>{{ pph.dateDeces ? pph.dateDeces|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>DateEntreeFonctionPublique</th>
+                <td>{{ pph.dateEntreeFonctionPublique ? pph.dateEntreeFonctionPublique|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>EstDecede</th>
+                <td>{{ pph.estDecede ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>EstRetraite</th>
+                <td>{{ pph.estRetraite ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>AQuitteFonctionPublique</th>
+                <td>{{ pph.aQuitteFonctionPublique ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>DateEntreeDansGrade</th>
+                <td>{{ pph.dateEntreeDansGrade ? pph.dateEntreeDansGrade|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Categorie</th>
+                <td>{{ pph.categorie }}</td>
+            </tr>
+            <tr>
+                <th>Encadrement</th>
+                <td>{{ pph.encadrement ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>IdentiteVerifiee</th>
+                <td>{{ pph.identiteVerifiee ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>DateInactivation</th>
+                <td>{{ pph.dateInactivation ? pph.dateInactivation|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>LibelleGrade</th>
+                <td>{{ pph.libelleGrade }}</td>
+            </tr>
+            <tr>
+                <th>ReferencePersonnePhysique</th>
+                <td>{{ pph.referencePersonnePhysique }}</td>
+            </tr>
+            <tr>
+                <th>EstAgent</th>
+                <td>{{ pph.estAgent ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>EstIntervenant</th>
+                <td>{{ pph.estIntervenant ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>EstGestionnaireCt</th>
+                <td>{{ pph.estGestionnaireCt ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>IdComptePortailAgent</th>
+                <td>{{ pph.idComptePortailAgent }}</td>
+            </tr>
+            <tr>
+                <th>IdFicheAgentIel</th>
+                <td>{{ pph.idFicheAgentIel }}</td>
+            </tr>
+            <tr>
+                <th>EstDedoublone</th>
+                <td>{{ pph.estDedoublone ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>NomNaissanceCondense</th>
+                <td>{{ pph.nomNaissanceCondense }}</td>
+            </tr>
+            <tr>
+                <th>PrenomNaissanceCondense</th>
+                <td>{{ pph.prenomNaissanceCondense }}</td>
+            </tr>
+            <tr>
+                <th>NomUsageCondense</th>
+                <td>{{ pph.nomUsageCondense }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('pph_index') }}">back to list</a>
+
+    <a href="{{ path('pph_edit', {'id': pph.id}) }}">edit</a>
+
+    {{ include('pph/_delete_form.html.twig') }}
+{% endblock %}

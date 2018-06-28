@@ -15,19 +15,18 @@ class SourceDonnees
     /**
      * @var int
      *
-     * @ORM\Column(name="ID_SOURCE_DONNEES", type="integer", nullable=false)
+     * @ORM\Column(name="ID", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="SEQUENCE")
-     * @ORM\SequenceGenerator(sequenceName="SOURCE_DONNEES_ID_SOURCE_DONNE", allocationSize=1, initialValue=1)
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $idSourceDonnees;
+    private $id;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="LIBELLE_SOURCE_DONNEES", type="string", length=32, nullable=true)
+     * @ORM\Column(name="LIBELLE", type="string", length=32, nullable=true)
      */
-    private $libelleSourceDonnees;
+    private $libelle;
 
     /**
      * @var bool|null
@@ -39,33 +38,33 @@ class SourceDonnees
     /**
      * @return int
      */
-    public function getIdSourceDonnees(): int
+    public function getId(): int
     {
-        return $this->idSourceDonnees;
+        return $this->id;
     }
 
     /**
-     * @param int $idSourceDonnees
+     * @param int $id
      */
-    public function setIdSourceDonnees(int $idSourceDonnees): void
+    public function setId(int $id): void
     {
-        $this->idSourceDonnees = $idSourceDonnees;
+        $this->id = $id;
     }
 
     /**
      * @return null|string
      */
-    public function getLibelleSourceDonnees(): ?string
+    public function getLibelle(): ?string
     {
-        return $this->libelleSourceDonnees;
+        return $this->libelle;
     }
 
     /**
-     * @param null|string $libelleSourceDonnees
+     * @param null|string $libelle
      */
-    public function setLibelleSourceDonnees(?string $libelleSourceDonnees): void
+    public function setLibelle(?string $libelle): void
     {
-        $this->libelleSourceDonnees = $libelleSourceDonnees;
+        $this->libelle = $libelle;
     }
 
     /**
@@ -83,19 +82,5 @@ class SourceDonnees
     {
         $this->actif = $actif;
     }
-    /**
-     * @return int
-     */
-    public function getId(): int
-    {
-        return $this->idSourceDonnees;
-    }
 
-    /**
-     * @param int $id
-     */
-    public function setId(int $id): void
-    {
-        $this->idSourceDonnees = $id;
-    }
 }

@@ -15,24 +15,23 @@ class PersonneMorale
     /**
      * @var int
      *
-     * @ORM\Column(name="ID_PMO", type="integer", nullable=false)
+     * @ORM\Column(name="ID", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="SEQUENCE")
-     * @ORM\SequenceGenerator(sequenceName="PERSONNE_MORALE_ID_PMO_seq", allocationSize=1, initialValue=1)
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $idPmo;
+    private $id;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="SIREN", type="string", length=64, nullable=true)
+     * @ORM\Column(name="SIREN", type="string", length=15, nullable=true)
      */
     private $siren;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="NOM", type="string", length=64, nullable=true)
+     * @ORM\Column(name="NOM", type="string", length=75, nullable=true)
      */
     private $nom;
 
@@ -42,10 +41,10 @@ class PersonneMorale
      * @ORM\ManyToMany(targetEntity="PersonneMorale", inversedBy="idPmo")
      * @ORM\JoinTable(name="pm_has_pm",
      *   joinColumns={
-     *     @ORM\JoinColumn(name="ID_PMO", referencedColumnName="ID_PMO")
+     *     @ORM\JoinColumn(name="ID_PMO", referencedColumnName="ID")
      *   },
      *   inverseJoinColumns={
-     *     @ORM\JoinColumn(name="ID_PMO1", referencedColumnName="ID_PMO")
+     *     @ORM\JoinColumn(name="ID_PMO1", referencedColumnName="ID")
      *   }
      * )
      */
@@ -62,17 +61,17 @@ class PersonneMorale
     /**
      * @return int
      */
-    public function getIdPmo(): int
+    public function getId(): int
     {
-        return $this->idPmo;
+        return $this->id;
     }
 
     /**
-     * @param int $idPmo
+     * @param int $id
      */
-    public function setIdPmo(int $idPmo): void
+    public function setId(int $id): void
     {
-        $this->idPmo = $idPmo;
+        $this->id = $id;
     }
 
     /**
@@ -122,19 +121,5 @@ class PersonneMorale
     {
         $this->idPmo1 = $idPmo1;
     }
-    /**
-     * @return int
-     */
-    public function getId(): int
-    {
-        return $this->idPmo;
-    }
 
-    /**
-     * @param int $id
-     */
-    public function setId(int $id): void
-    {
-        $this->idPmo = $id;
-    }
 }

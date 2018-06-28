@@ -15,26 +15,25 @@ class Commune
     /**
      * @var int
      *
-     * @ORM\Column(name="ID_COMMUNE", type="integer", nullable=false)
+     * @ORM\Column(name="ID", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="SEQUENCE")
-     * @ORM\SequenceGenerator(sequenceName="COMMUNE_ID_COMMUNE_seq", allocationSize=1, initialValue=1)
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $idCommune;
+    private $id;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="CODE_COMMUNE", type="string", length=32, nullable=true)
+     * @ORM\Column(name="CODE", type="string", length=32, nullable=true)
      */
-    private $codeCommune;
+    private $code;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="LIBELLE_INSEE_COMMUNE", type="string", length=45, nullable=true)
+     * @ORM\Column(name="LIBELLE_INSEE", type="string", length=45, nullable=true)
      */
-    private $libelleInseeCommune;
+    private $libelleInsee;
 
     /**
      * @var string|null
@@ -67,49 +66,49 @@ class Commune
     /**
      * @return int
      */
-    public function getIdCommune(): int
+    public function getId(): int
     {
-        return $this->idCommune;
+        return $this->id;
     }
 
     /**
-     * @param int $idCommune
+     * @param int $id
      */
-    public function setIdCommune(int $idCommune): void
+    public function setId(int $id): void
     {
-        $this->idCommune = $idCommune;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getCodeCommune(): ?string
-    {
-        return $this->codeCommune;
-    }
-
-    /**
-     * @param null|string $codeCommune
-     */
-    public function setCodeCommune(?string $codeCommune): void
-    {
-        $this->codeCommune = $codeCommune;
+        $this->id = $id;
     }
 
     /**
      * @return null|string
      */
-    public function getLibelleInseeCommune(): ?string
+    public function getCode(): ?string
     {
-        return $this->libelleInseeCommune;
+        return $this->code;
     }
 
     /**
-     * @param null|string $libelleInseeCommune
+     * @param null|string $code
      */
-    public function setLibelleInseeCommune(?string $libelleInseeCommune): void
+    public function setCode(?string $code): void
     {
-        $this->libelleInseeCommune = $libelleInseeCommune;
+        $this->code = $code;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getLibelleInsee(): ?string
+    {
+        return $this->libelleInsee;
+    }
+
+    /**
+     * @param null|string $libelleInsee
+     */
+    public function setLibelleInsee(?string $libelleInsee): void
+    {
+        $this->libelleInsee = $libelleInsee;
     }
 
     /**
@@ -175,19 +174,5 @@ class Commune
     {
         $this->ancienCodeInsee = $ancienCodeInsee;
     }
-    /**
-     * @return int
-     */
-    public function getId(): int
-    {
-        return $this->idCommune;
-    }
 
-    /**
-     * @param int $id
-     */
-    public function setId(int $id): void
-    {
-        $this->idCommune = $id;
-    }
 }

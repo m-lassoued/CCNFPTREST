@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Coordonnees
  *
- * @ORM\Table(name="COORDONNEES", indexes={@ORM\Index(name="fk_co_type_co1_idx", columns={"ID_TYPE_COORDONNEES"}), @ORM\Index(name="fk_coordonnees_adresse_idx", columns={"ADRESSE_ID_ADRESSE"})})
+ * @ORM\Table(name="COORDONNEES", indexes={@ORM\Index(name="fk_co_type_co1_idx", columns={"ID_TYPE_COORDONNEES"}), @ORM\Index(name="fk_coordonnees_adresse_idx", columns={"ID_ADRESSE"})})
  * @ORM\Entity
  */
 class Coordonnees
@@ -15,38 +15,37 @@ class Coordonnees
     /**
      * @var int
      *
-     * @ORM\Column(name="ID_COORDONNEES", type="integer", nullable=false)
+     * @ORM\Column(name="ID", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="SEQUENCE")
-     * @ORM\SequenceGenerator(sequenceName="COORDONNEES_ID_COORDONNEES_seq", allocationSize=1, initialValue=1)
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $idCoordonnees;
+    private $id;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="TELEPHONE_FIXE", type="string", length=32, nullable=true)
+     * @ORM\Column(name="TELEPHONE_FIXE", type="string", length=25, nullable=true)
      */
     private $telephoneFixe;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="TELEPHONE_PORTABLE", type="string", length=32, nullable=true)
+     * @ORM\Column(name="TELEPHONE_PORTABLE", type="string", length=25, nullable=true)
      */
     private $telephonePortable;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="ADRESSE_E_PRINCIPALE", type="string", length=128, nullable=true)
+     * @ORM\Column(name="ADRESSE_E_PRINCIPALE", type="string", length=320, nullable=true)
      */
     private $adresseEPrincipale;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="ADRESSE_E_SECONDAIRE", type="string", length=128, nullable=true)
+     * @ORM\Column(name="ADRESSE_E_SECONDAIRE", type="string", length=320, nullable=true)
      */
     private $adresseESecondaire;
 
@@ -55,17 +54,17 @@ class Coordonnees
      *
      * @ORM\ManyToOne(targetEntity="Adresse")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="ADRESSE_ID_ADRESSE", referencedColumnName="ID_ADRESSE")
+     *   @ORM\JoinColumn(name="ID_ADRESSE", referencedColumnName="ID")
      * })
      */
-    private $adresseAdresse;
+    private $idAdresse;
 
     /**
      * @var \TypeCoordonnees
      *
      * @ORM\ManyToOne(targetEntity="TypeCoordonnees")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="ID_TYPE_COORDONNEES", referencedColumnName="ID_TYPE_COORDONNEES")
+     *   @ORM\JoinColumn(name="ID_TYPE_COORDONNEES", referencedColumnName="ID")
      * })
      */
     private $idTypeCoordonnees;
@@ -73,17 +72,17 @@ class Coordonnees
     /**
      * @return int
      */
-    public function getIdCoordonnees(): int
+    public function getId(): int
     {
-        return $this->idCoordonnees;
+        return $this->id;
     }
 
     /**
-     * @param int $idCoordonnees
+     * @param int $id
      */
-    public function setIdCoordonnees(int $idCoordonnees): void
+    public function setId(int $id): void
     {
-        $this->idCoordonnees = $idCoordonnees;
+        $this->id = $id;
     }
 
     /**
@@ -153,17 +152,17 @@ class Coordonnees
     /**
      * @return \Adresse
      */
-    public function getAdresseAdresse(): \Adresse
+    public function getIdAdresse(): \Adresse
     {
-        return $this->adresseAdresse;
+        return $this->idAdresse;
     }
 
     /**
-     * @param \Adresse $adresseAdresse
+     * @param \Adresse $idAdresse
      */
-    public function setAdresseAdresse(\Adresse $adresseAdresse): void
+    public function setIdAdresse(\Adresse $idAdresse): void
     {
-        $this->adresseAdresse = $adresseAdresse;
+        $this->idAdresse = $idAdresse;
     }
 
     /**
@@ -181,19 +180,5 @@ class Coordonnees
     {
         $this->idTypeCoordonnees = $idTypeCoordonnees;
     }
-    /**
-     * @return int
-     */
-    public function getId(): int
-    {
-        return $this->idCoordonnees;
-    }
 
-    /**
-     * @param int $id
-     */
-    public function setId(int $id): void
-    {
-        $this->idCoordonnees = $id;
-    }
 }

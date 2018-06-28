@@ -15,26 +15,25 @@ class FamilleMetier
     /**
      * @var int
      *
-     * @ORM\Column(name="ID_FAMILLE_METIER", type="integer", nullable=false)
+     * @ORM\Column(name="ID", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="SEQUENCE")
-     * @ORM\SequenceGenerator(sequenceName="FAMILLE_METIER_ID_FAMILLE_METI", allocationSize=1, initialValue=1)
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $idFamilleMetier;
+    private $id;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="LIBELLE_FAMILLE_METIER", type="string", length=64, nullable=true)
+     * @ORM\Column(name="LIBELLE", type="string", length=64, nullable=true)
      */
-    private $libelleFamilleMetier;
+    private $libelle;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="CODE_FAMILLE_METIER", type="string", length=64, nullable=true)
+     * @ORM\Column(name="CODE", type="string", length=64, nullable=true)
      */
-    private $codeFamilleMetier;
+    private $code;
 
     /**
      * @var bool|null
@@ -46,49 +45,49 @@ class FamilleMetier
     /**
      * @return int
      */
-    public function getIdFamilleMetier(): int
+    public function getId(): int
     {
-        return $this->idFamilleMetier;
+        return $this->id;
     }
 
     /**
-     * @param int $idFamilleMetier
+     * @param int $id
      */
-    public function setIdFamilleMetier(int $idFamilleMetier): void
+    public function setId(int $id): void
     {
-        $this->idFamilleMetier = $idFamilleMetier;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getLibelleFamilleMetier(): ?string
-    {
-        return $this->libelleFamilleMetier;
-    }
-
-    /**
-     * @param null|string $libelleFamilleMetier
-     */
-    public function setLibelleFamilleMetier(?string $libelleFamilleMetier): void
-    {
-        $this->libelleFamilleMetier = $libelleFamilleMetier;
+        $this->id = $id;
     }
 
     /**
      * @return null|string
      */
-    public function getCodeFamilleMetier(): ?string
+    public function getLibelle(): ?string
     {
-        return $this->codeFamilleMetier;
+        return $this->libelle;
     }
 
     /**
-     * @param null|string $codeFamilleMetier
+     * @param null|string $libelle
      */
-    public function setCodeFamilleMetier(?string $codeFamilleMetier): void
+    public function setLibelle(?string $libelle): void
     {
-        $this->codeFamilleMetier = $codeFamilleMetier;
+        $this->libelle = $libelle;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getCode(): ?string
+    {
+        return $this->code;
+    }
+
+    /**
+     * @param null|string $code
+     */
+    public function setCode(?string $code): void
+    {
+        $this->code = $code;
     }
 
     /**
@@ -106,19 +105,5 @@ class FamilleMetier
     {
         $this->actif = $actif;
     }
-    /**
-     * @return int
-     */
-    public function getId(): int
-    {
-        return $this->idFamilleMetier;
-    }
 
-    /**
-     * @param int $id
-     */
-    public function setId(int $id): void
-    {
-        $this->idFamilleMetier = $id;
-    }
 }

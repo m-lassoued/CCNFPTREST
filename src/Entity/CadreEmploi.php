@@ -15,19 +15,25 @@ class CadreEmploi
     /**
      * @var int
      *
-     * @ORM\Column(name="ID_CADRE_EMPLOI", type="integer", nullable=false)
+     * @ORM\Column(name="ID", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="SEQUENCE")
-     * @ORM\SequenceGenerator(sequenceName="CADRE_EMPLOI_ID_CADRE_EMPLOI_s", allocationSize=1, initialValue=1)
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $idCadreEmploi;
+    private $id;
+
+    /**
+     * @var int|null
+     *
+     * @ORM\Column(name="CODE", type="integer", nullable=true)
+     */
+    private $code;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="LIBELLE_CADRE_EMPLOI", type="string", length=64, nullable=true)
+     * @ORM\Column(name="LIBELLE", type="string", length=75, nullable=true)
      */
-    private $libelleCadreEmploi;
+    private $libelle;
 
     /**
      * @var bool|null
@@ -41,7 +47,7 @@ class CadreEmploi
      *
      * @ORM\ManyToOne(targetEntity="Filliere")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="ID_FILLIERE", referencedColumnName="ID_FILLIERE")
+     *   @ORM\JoinColumn(name="ID_FILLIERE", referencedColumnName="ID")
      * })
      */
     private $idFilliere;
@@ -49,33 +55,49 @@ class CadreEmploi
     /**
      * @return int
      */
-    public function getIdCadreEmploi(): int
+    public function getId(): int
     {
-        return $this->idCadreEmploi;
+        return $this->id;
     }
 
     /**
-     * @param int $idCadreEmploi
+     * @param int $id
      */
-    public function setIdCadreEmploi(int $idCadreEmploi): void
+    public function setId(int $id): void
     {
-        $this->idCadreEmploi = $idCadreEmploi;
+        $this->id = $id;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getCode(): ?int
+    {
+        return $this->code;
+    }
+
+    /**
+     * @param int|null $code
+     */
+    public function setCode(?int $code): void
+    {
+        $this->code = $code;
     }
 
     /**
      * @return null|string
      */
-    public function getLibelleCadreEmploi(): ?string
+    public function getLibelle(): ?string
     {
-        return $this->libelleCadreEmploi;
+        return $this->libelle;
     }
 
     /**
-     * @param null|string $libelleCadreEmploi
+     * @param null|string $libelle
      */
-    public function setLibelleCadreEmploi(?string $libelleCadreEmploi): void
+    public function setLibelle(?string $libelle): void
     {
-        $this->libelleCadreEmploi = $libelleCadreEmploi;
+        $this->libelle = $libelle;
     }
 
     /**
@@ -109,19 +131,5 @@ class CadreEmploi
     {
         $this->idFilliere = $idFilliere;
     }
-    /**
-     * @return int
-     */
-    public function getId(): int
-    {
-        return $this->idCadreEmploi;
-    }
 
-    /**
-     * @param int $id
-     */
-    public function setId(int $id): void
-    {
-        $this->idCadreEmploi = $id;
-    }
 }

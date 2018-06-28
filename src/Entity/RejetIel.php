@@ -13,6 +13,15 @@ use Doctrine\ORM\Mapping as ORM;
 class RejetIel
 {
     /**
+     * @var int
+     *
+     * @ORM\Column(name="ID", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
      * @var string|null
      *
      * @ORM\Column(name="REFERENCE_OBJET_IEL", type="string", length=45, nullable=true)
@@ -36,26 +45,32 @@ class RejetIel
     /**
      * @var string|null
      *
-     * @ORM\Column(name="OBJET_IEL", type="string", length=45, nullable=true)
-     */
-    private $objetIel;
-
-    /**
-     * @var string|null
-     *
      * @ORM\Column(name="TYPE_ERREUR", type="string", length=45, nullable=true)
      */
     private $typeErreur;
 
     /**
-     * @var int
+     * @var string|null
      *
-     * @ORM\Column(name="ID", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="SEQUENCE")
-     * @ORM\SequenceGenerator(sequenceName="REJET_IEL_ID_seq", allocationSize=1, initialValue=1)
+     * @ORM\Column(name="OBJET_IEL", type="string", length=45, nullable=true)
      */
-    private $id;
+    private $objetIel;
+
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
 
     /**
      * @return null|string
@@ -108,22 +123,6 @@ class RejetIel
     /**
      * @return null|string
      */
-    public function getObjetIel(): ?string
-    {
-        return $this->objetIel;
-    }
-
-    /**
-     * @param null|string $objetIel
-     */
-    public function setObjetIel(?string $objetIel): void
-    {
-        $this->objetIel = $objetIel;
-    }
-
-    /**
-     * @return null|string
-     */
     public function getTypeErreur(): ?string
     {
         return $this->typeErreur;
@@ -138,19 +137,19 @@ class RejetIel
     }
 
     /**
-     * @return int
+     * @return null|string
      */
-    public function getId(): int
+    public function getObjetIel(): ?string
     {
-        return $this->id;
+        return $this->objetIel;
     }
 
     /**
-     * @param int $id
+     * @param null|string $objetIel
      */
-    public function setId(int $id): void
+    public function setObjetIel(?string $objetIel): void
     {
-        $this->id = $id;
+        $this->objetIel = $objetIel;
     }
 
 }

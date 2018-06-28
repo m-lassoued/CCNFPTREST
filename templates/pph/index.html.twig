@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Pph index{% endblock %}
+
+{% block body %}
+    <h1>Pph index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>NomNaissance</th>
+                <th>NomUsage</th>
+                <th>Prenom</th>
+                <th>DateNaissance</th>
+                <th>DateDeces</th>
+                <th>DateEntreeFonctionPublique</th>
+                <th>EstDecede</th>
+                <th>EstRetraite</th>
+                <th>AQuitteFonctionPublique</th>
+                <th>DateEntreeDansGrade</th>
+                <th>Categorie</th>
+                <th>Encadrement</th>
+                <th>IdentiteVerifiee</th>
+                <th>DateInactivation</th>
+                <th>LibelleGrade</th>
+                <th>ReferencePersonnePhysique</th>
+                <th>EstAgent</th>
+                <th>EstIntervenant</th>
+                <th>EstGestionnaireCt</th>
+                <th>IdComptePortailAgent</th>
+                <th>IdFicheAgentIel</th>
+                <th>EstDedoublone</th>
+                <th>NomNaissanceCondense</th>
+                <th>PrenomNaissanceCondense</th>
+                <th>NomUsageCondense</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for pph in pphs %}
+            <tr>
+                <td>{{ pph.id }}</td>
+                <td>{{ pph.nomNaissance }}</td>
+                <td>{{ pph.nomUsage }}</td>
+                <td>{{ pph.prenom }}</td>
+                <td>{{ pph.dateNaissance ? pph.dateNaissance|date('Y-m-d') : '' }}</td>
+                <td>{{ pph.dateDeces ? pph.dateDeces|date('Y-m-d') : '' }}</td>
+                <td>{{ pph.dateEntreeFonctionPublique ? pph.dateEntreeFonctionPublique|date('Y-m-d') : '' }}</td>
+                <td>{{ pph.estDecede ? 'Yes' : 'No' }}</td>
+                <td>{{ pph.estRetraite ? 'Yes' : 'No' }}</td>
+                <td>{{ pph.aQuitteFonctionPublique ? 'Yes' : 'No' }}</td>
+                <td>{{ pph.dateEntreeDansGrade ? pph.dateEntreeDansGrade|date('Y-m-d') : '' }}</td>
+                <td>{{ pph.categorie }}</td>
+                <td>{{ pph.encadrement ? 'Yes' : 'No' }}</td>
+                <td>{{ pph.identiteVerifiee ? 'Yes' : 'No' }}</td>
+                <td>{{ pph.dateInactivation ? pph.dateInactivation|date('Y-m-d') : '' }}</td>
+                <td>{{ pph.libelleGrade }}</td>
+                <td>{{ pph.referencePersonnePhysique }}</td>
+                <td>{{ pph.estAgent ? 'Yes' : 'No' }}</td>
+                <td>{{ pph.estIntervenant ? 'Yes' : 'No' }}</td>
+                <td>{{ pph.estGestionnaireCt ? 'Yes' : 'No' }}</td>
+                <td>{{ pph.idComptePortailAgent }}</td>
+                <td>{{ pph.idFicheAgentIel }}</td>
+                <td>{{ pph.estDedoublone ? 'Yes' : 'No' }}</td>
+                <td>{{ pph.nomNaissanceCondense }}</td>
+                <td>{{ pph.prenomNaissanceCondense }}</td>
+                <td>{{ pph.nomUsageCondense }}</td>
+                <td>
+                    <a href="{{ path('pph_show', {'id': pph.id}) }}">show</a>
+                    <a href="{{ path('pph_edit', {'id': pph.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="27">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('pph_new') }}">Create new</a>
+{% endblock %}

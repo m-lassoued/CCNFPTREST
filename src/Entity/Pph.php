@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Pph
  *
- * @ORM\Table(name="PPH", indexes={@ORM\Index(name="fk_pph_metier1_idx", columns={"ID_METIER"}), @ORM\Index(name="fk_pph_etat_pph1_idx", columns={"ID_ETAT_PPH"}), @ORM\Index(name="fk_pph_coordonnees1_idx", columns={"ID_COORDONNEES"}), @ORM\Index(name="fk_pph_source_donnees1_idx", columns={"ID_SOURCE_DONNEES"}), @ORM\Index(name="fk_pph_net1_idx", columns={"ID_NET"}), @ORM\Index(name="fk_pph_civilite1_idx", columns={"ID_CIVILITE"})})
+ * @ORM\Table(name="PPH", indexes={@ORM\Index(name="fk_pph_metier1_idx", columns={"ID_METIER"}), @ORM\Index(name="fk_pph_etat_pph1_idx", columns={"ID_ETAT_PPH"}), @ORM\Index(name="fk_pph_motif_inactivation1_idx", columns={"ID_MOTIF_INACTIVATION"}), @ORM\Index(name="fk_pph_source_donnees1_idx", columns={"ID_SOURCE_DONNEES"}), @ORM\Index(name="fk_pph_net1_idx", columns={"ID_NET"}), @ORM\Index(name="fk_pph_coordonnees1_idx", columns={"ID_COORDONNEES"}), @ORM\Index(name="fk_pph_civilite1_idx", columns={"ID_CIVILITE"})})
  * @ORM\Entity
  */
 class Pph
@@ -15,19 +15,32 @@ class Pph
     /**
      * @var int
      *
-     * @ORM\Column(name="ID_PPH", type="integer", nullable=false)
+     * @ORM\Column(name="ID", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="SEQUENCE")
-     * @ORM\SequenceGenerator(sequenceName="PPH_ID_PPH_seq", allocationSize=1, initialValue=1)
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $idPph;
+    private $id;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="NOM_NAISSANCE", type="string", length=64, nullable=true)
+     * @ORM\Column(name="NOM_NAISSANCE", type="string", length=50, nullable=true)
      */
     private $nomNaissance;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="NOM_USAGE", type="string", length=50, nullable=true)
+     */
+    private $nomUsage;
+
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="PRENOM", type="string", length=50, nullable=true)
+     */
+    private $prenom;
 
     /**
      * @var \DateTime|null
@@ -35,13 +48,6 @@ class Pph
      * @ORM\Column(name="DATE_NAISSANCE", type="date", nullable=true)
      */
     private $dateNaissance;
-
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(name="PRENOM", type="string", length=64, nullable=true)
-     */
-    private $prenom;
 
     /**
      * @var \DateTime|null
@@ -56,13 +62,6 @@ class Pph
      * @ORM\Column(name="DATE_ENTREE_FONCTION_PUBLIQUE", type="date", nullable=true)
      */
     private $dateEntreeFonctionPublique;
-
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(name="NOM_USAGE", type="string", length=64, nullable=true)
-     */
-    private $nomUsage;
 
     /**
      * @var bool|null
@@ -95,7 +94,7 @@ class Pph
     /**
      * @var string|null
      *
-     * @ORM\Column(name="CATEGORIE", type="string", length=64, nullable=true)
+     * @ORM\Column(name="CATEGORIE", type="string", length=50, nullable=true)
      */
     private $categorie;
 
@@ -123,7 +122,7 @@ class Pph
     /**
      * @var string|null
      *
-     * @ORM\Column(name="LIBELLE_GRADE", type="string", length=32, nullable=true)
+     * @ORM\Column(name="LIBELLE_GRADE", type="string", length=75, nullable=true)
      */
     private $libelleGrade;
 
@@ -163,96 +162,106 @@ class Pph
     private $idComptePortailAgent;
 
     /**
-     * @var string|null
+     * @var int|null
      *
-     * @ORM\Column(name="ID_FICHE_AGENT_IEL", type="string", length=45, nullable=true)
+     * @ORM\Column(name="ID_FICHE_AGENT_IEL", type="integer", nullable=true)
      */
     private $idFicheAgentIel;
 
     /**
      * @var bool|null
      *
-     * @ORM\Column(name="EST_DEDOUBLOUNE", type="boolean", nullable=true)
+     * @ORM\Column(name="EST_DEDOUBLONE", type="boolean", nullable=true)
      */
-    private $estDedoubloune;
+    private $estDedoublone;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="NOM_NAISSANCE_CONDENCE", type="string", length=64, nullable=true)
+     * @ORM\Column(name="NOM_NAISSANCE_CONDENSE", type="string", length=50, nullable=true)
      */
-    private $nomNaissanceCondence;
+    private $nomNaissanceCondense;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="PRENOM_NAISSANCE_CONDENCE", type="string", length=64, nullable=true)
+     * @ORM\Column(name="PRENOM_NAISSANCE_CONDENSE", type="string", length=50, nullable=true)
      */
-    private $prenomNaissanceCondence;
+    private $prenomNaissanceCondense;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="NOM_USAGE_CONDENCE", type="string", length=64, nullable=true)
+     * @ORM\Column(name="NOM_USAGE_CONDENSE", type="string", length=50, nullable=true)
      */
-    private $nomUsageCondence;
+    private $nomUsageCondense;
 
     /**
      * @var \Civilite
      *
      * @ORM\ManyToOne(targetEntity="Civilite")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="ID_CIVILITE", referencedColumnName="ID_CIVILITE")
+     *   @ORM\JoinColumn(name="ID_CIVILITE", referencedColumnName="ID")
      * })
      */
     private $idCivilite;
 
     /**
-     * @var \Coordonnees
+     * @var Coordonnees
      *
      * @ORM\ManyToOne(targetEntity="Coordonnees")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="ID_COORDONNEES", referencedColumnName="ID_COORDONNEES")
+     *   @ORM\JoinColumn(name="ID_COORDONNEES", referencedColumnName="ID")
      * })
      */
     private $idCoordonnees;
 
     /**
-     * @var \EtatPph
+     * @var EtatPph
      *
      * @ORM\ManyToOne(targetEntity="EtatPph")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="ID_ETAT_PPH", referencedColumnName="ID_ETAT_PPH")
+     *   @ORM\JoinColumn(name="ID_ETAT_PPH", referencedColumnName="ID")
      * })
      */
     private $idEtatPph;
 
     /**
-     * @var \Metier
+     * @var Metier
      *
      * @ORM\ManyToOne(targetEntity="Metier")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="ID_METIER", referencedColumnName="ID_METIER")
+     *   @ORM\JoinColumn(name="ID_METIER", referencedColumnName="ID")
      * })
      */
     private $idMetier;
 
     /**
-     * @var \Net
+     * @var MotifInactivation
+     *
+     * @ORM\ManyToOne(targetEntity="MotifInactivation")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="ID_MOTIF_INACTIVATION", referencedColumnName="ID")
+     * })
+     */
+    private $idMotifInactivation;
+
+    /**
+     * @var Net
      *
      * @ORM\ManyToOne(targetEntity="Net")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="ID_NET", referencedColumnName="ID_NET")
+     *   @ORM\JoinColumn(name="ID_NET", referencedColumnName="ID")
      * })
      */
     private $idNet;
 
     /**
-     * @var \SourceDonnees
+     * @var SourceDonnees
      *
      * @ORM\ManyToOne(targetEntity="SourceDonnees")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="ID_SOURCE_DONNEES", referencedColumnName="ID_SOURCE_DONNEES")
+     *   @ORM\JoinColumn(name="ID_SOURCE_DONNEES", referencedColumnName="ID")
      * })
      */
     private $idSourceDonnees;
@@ -260,17 +269,17 @@ class Pph
     /**
      * @return int
      */
-    public function getIdPph(): int
+    public function getId(): int
     {
-        return $this->idPph;
+        return $this->id;
     }
 
     /**
-     * @param int $idPph
+     * @param int $id
      */
-    public function setIdPph(int $idPph): void
+    public function setId(int $id): void
     {
-        $this->idPph = $idPph;
+        $this->id = $id;
     }
 
     /**
@@ -290,19 +299,19 @@ class Pph
     }
 
     /**
-     * @return \DateTime|null
+     * @return null|string
      */
-    public function getDateNaissance(): ?\DateTime
+    public function getNomUsage(): ?string
     {
-        return $this->dateNaissance;
+        return $this->nomUsage;
     }
 
     /**
-     * @param \DateTime|null $dateNaissance
+     * @param null|string $nomUsage
      */
-    public function setDateNaissance(?\DateTime $dateNaissance): void
+    public function setNomUsage(?string $nomUsage): void
     {
-        $this->dateNaissance = $dateNaissance;
+        $this->nomUsage = $nomUsage;
     }
 
     /**
@@ -319,6 +328,22 @@ class Pph
     public function setPrenom(?string $prenom): void
     {
         $this->prenom = $prenom;
+    }
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getDateNaissance(): ?\DateTime
+    {
+        return $this->dateNaissance;
+    }
+
+    /**
+     * @param \DateTime|null $dateNaissance
+     */
+    public function setDateNaissance(?\DateTime $dateNaissance): void
+    {
+        $this->dateNaissance = $dateNaissance;
     }
 
     /**
@@ -351,22 +376,6 @@ class Pph
     public function setDateEntreeFonctionPublique(?\DateTime $dateEntreeFonctionPublique): void
     {
         $this->dateEntreeFonctionPublique = $dateEntreeFonctionPublique;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getNomUsage(): ?string
-    {
-        return $this->nomUsage;
-    }
-
-    /**
-     * @param null|string $nomUsage
-     */
-    public function setNomUsage(?string $nomUsage): void
-    {
-        $this->nomUsage = $nomUsage;
     }
 
     /**
@@ -594,17 +603,17 @@ class Pph
     }
 
     /**
-     * @return null|string
+     * @return int|null
      */
-    public function getIdFicheAgentIel(): ?string
+    public function getIdFicheAgentIel(): ?int
     {
         return $this->idFicheAgentIel;
     }
 
     /**
-     * @param null|string $idFicheAgentIel
+     * @param int|null $idFicheAgentIel
      */
-    public function setIdFicheAgentIel(?string $idFicheAgentIel): void
+    public function setIdFicheAgentIel(?int $idFicheAgentIel): void
     {
         $this->idFicheAgentIel = $idFicheAgentIel;
     }
@@ -612,175 +621,177 @@ class Pph
     /**
      * @return bool|null
      */
-    public function getEstDedoubloune(): ?bool
+    public function getEstDedoublone(): ?bool
     {
-        return $this->estDedoubloune;
+        return $this->estDedoublone;
     }
 
     /**
-     * @param bool|null $estDedoubloune
+     * @param bool|null $estDedoublone
      */
-    public function setEstDedoubloune(?bool $estDedoubloune): void
+    public function setEstDedoublone(?bool $estDedoublone): void
     {
-        $this->estDedoubloune = $estDedoubloune;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getNomNaissanceCondence(): ?string
-    {
-        return $this->nomNaissanceCondence;
-    }
-
-    /**
-     * @param null|string $nomNaissanceCondence
-     */
-    public function setNomNaissanceCondence(?string $nomNaissanceCondence): void
-    {
-        $this->nomNaissanceCondence = $nomNaissanceCondence;
+        $this->estDedoublone = $estDedoublone;
     }
 
     /**
      * @return null|string
      */
-    public function getPrenomNaissanceCondence(): ?string
+    public function getNomNaissanceCondense(): ?string
     {
-        return $this->prenomNaissanceCondence;
+        return $this->nomNaissanceCondense;
     }
 
     /**
-     * @param null|string $prenomNaissanceCondence
+     * @param null|string $nomNaissanceCondense
      */
-    public function setPrenomNaissanceCondence(?string $prenomNaissanceCondence): void
+    public function setNomNaissanceCondense(?string $nomNaissanceCondense): void
     {
-        $this->prenomNaissanceCondence = $prenomNaissanceCondence;
+        $this->nomNaissanceCondense = $nomNaissanceCondense;
     }
 
     /**
      * @return null|string
      */
-    public function getNomUsageCondence(): ?string
+    public function getPrenomNaissanceCondense(): ?string
     {
-        return $this->nomUsageCondence;
+        return $this->prenomNaissanceCondense;
     }
 
     /**
-     * @param null|string $nomUsageCondence
+     * @param null|string $prenomNaissanceCondense
      */
-    public function setNomUsageCondence(?string $nomUsageCondence): void
+    public function setPrenomNaissanceCondense(?string $prenomNaissanceCondense): void
     {
-        $this->nomUsageCondence = $nomUsageCondence;
+        $this->prenomNaissanceCondense = $prenomNaissanceCondense;
     }
 
     /**
-     * @return \Civilite
+     * @return null|string
      */
-    public function getIdCivilite(): \Civilite
+    public function getNomUsageCondense(): ?string
+    {
+        return $this->nomUsageCondense;
+    }
+
+    /**
+     * @param null|string $nomUsageCondense
+     */
+    public function setNomUsageCondense(?string $nomUsageCondense): void
+    {
+        $this->nomUsageCondense = $nomUsageCondense;
+    }
+
+    /**
+     * @return null|Civilite
+     */
+    public function getIdCivilite(): ?Civilite
     {
         return $this->idCivilite;
     }
 
     /**
-     * @param \Civilite $idCivilite
+     * @param Civilite $idCivilite
      */
-    public function setIdCivilite(\Civilite $idCivilite): void
+    public function setIdCivilite(Civilite $idCivilite): void
     {
         $this->idCivilite = $idCivilite;
     }
 
     /**
-     * @return \Coordonnees
+     * @return null|Coordonnees
      */
-    public function getIdCoordonnees(): \Coordonnees
+    public function getIdCoordonnees(): ?Coordonnees
     {
         return $this->idCoordonnees;
     }
 
     /**
-     * @param \Coordonnees $idCoordonnees
+     * @param Coordonnees $idCoordonnees
      */
-    public function setIdCoordonnees(\Coordonnees $idCoordonnees): void
+    public function setIdCoordonnees(Coordonnees $idCoordonnees): void
     {
         $this->idCoordonnees = $idCoordonnees;
     }
 
     /**
-     * @return \EtatPph
+     * @return null|EtatPph
      */
-    public function getIdEtatPph(): \EtatPph
+    public function getIdEtatPph(): ?EtatPph
     {
         return $this->idEtatPph;
     }
 
     /**
-     * @param \EtatPph $idEtatPph
+     * @param EtatPph $idEtatPph
      */
-    public function setIdEtatPph(\EtatPph $idEtatPph): void
+    public function setIdEtatPph(EtatPph $idEtatPph): void
     {
         $this->idEtatPph = $idEtatPph;
     }
 
     /**
-     * @return \Metier
+     * @return null|Metier
      */
-    public function getIdMetier(): \Metier
+    public function getIdMetier(): ?Metier
     {
         return $this->idMetier;
     }
 
     /**
-     * @param \Metier $idMetier
+     * @param Metier $idMetier
      */
-    public function setIdMetier(\Metier $idMetier): void
+    public function setIdMetier(Metier $idMetier): void
     {
         $this->idMetier = $idMetier;
     }
 
     /**
-     * @return \Net
+     * @return null|MotifInactivation
      */
-    public function getIdNet(): \Net
+    public function getIdMotifInactivation(): ?MotifInactivation
+    {
+        return $this->idMotifInactivation;
+    }
+
+    /**
+     * @param MotifInactivation $idMotifInactivation
+     */
+    public function setIdMotifInactivation(MotifInactivation $idMotifInactivation): void
+    {
+        $this->idMotifInactivation = $idMotifInactivation;
+    }
+
+    /**
+     * @return null|Net
+     */
+    public function getIdNet(): ?Net
     {
         return $this->idNet;
     }
 
     /**
-     * @param \Net $idNet
+     * @param Net $idNet
      */
-    public function setIdNet(\Net $idNet): void
+    public function setIdNet(Net $idNet): void
     {
         $this->idNet = $idNet;
     }
 
     /**
-     * @return \SourceDonnees
+     * @return null|SourceDonnees
      */
-    public function getIdSourceDonnees(): \SourceDonnees
+    public function getIdSourceDonnees(): ?SourceDonnees
     {
         return $this->idSourceDonnees;
     }
 
     /**
-     * @param \SourceDonnees $idSourceDonnees
+     * @param SourceDonnees $idSourceDonnees
      */
-    public function setIdSourceDonnees(\SourceDonnees $idSourceDonnees): void
+    public function setIdSourceDonnees(SourceDonnees $idSourceDonnees): void
     {
         $this->idSourceDonnees = $idSourceDonnees;
     }
-    /**
-     * @return int
-     */
-    public function getId(): int
-    {
-        return $this->idPph;
-    }
 
-    /**
-     * @param int $id
-     */
-    public function setId(int $id): void
-    {
-        $this->idPph = $id;
-    }
 }

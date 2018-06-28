@@ -15,26 +15,25 @@ class Net
     /**
      * @var int
      *
-     * @ORM\Column(name="ID_NET", type="integer", nullable=false)
+     * @ORM\Column(name="ID", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="SEQUENCE")
-     * @ORM\SequenceGenerator(sequenceName="NET_ID_NET_seq", allocationSize=1, initialValue=1)
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $idNet;
+    private $id;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="LIBELLE_NET", type="string", length=64, nullable=true)
+     * @ORM\Column(name="LIBELLE", type="string", length=255, nullable=true)
      */
-    private $libelleNet;
+    private $libelle;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="CODE_NET", type="string", length=64, nullable=true)
+     * @ORM\Column(name="CODE", type="string", length=5, nullable=true)
      */
-    private $codeNet;
+    private $code;
 
     /**
      * @var bool|null
@@ -48,7 +47,7 @@ class Net
      *
      * @ORM\ManyToOne(targetEntity="CadreEmploi")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="ID_CADRE_EMPLOI", referencedColumnName="ID_CADRE_EMPLOI")
+     *   @ORM\JoinColumn(name="ID_CADRE_EMPLOI", referencedColumnName="ID")
      * })
      */
     private $idCadreEmploi;
@@ -56,49 +55,49 @@ class Net
     /**
      * @return int
      */
-    public function getIdNet(): int
+    public function getId(): int
     {
-        return $this->idNet;
+        return $this->id;
     }
 
     /**
-     * @param int $idNet
+     * @param int $id
      */
-    public function setIdNet(int $idNet): void
+    public function setId(int $id): void
     {
-        $this->idNet = $idNet;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getLibelleNet(): ?string
-    {
-        return $this->libelleNet;
-    }
-
-    /**
-     * @param null|string $libelleNet
-     */
-    public function setLibelleNet(?string $libelleNet): void
-    {
-        $this->libelleNet = $libelleNet;
+        $this->id = $id;
     }
 
     /**
      * @return null|string
      */
-    public function getCodeNet(): ?string
+    public function getLibelle(): ?string
     {
-        return $this->codeNet;
+        return $this->libelle;
     }
 
     /**
-     * @param null|string $codeNet
+     * @param null|string $libelle
      */
-    public function setCodeNet(?string $codeNet): void
+    public function setLibelle(?string $libelle): void
     {
-        $this->codeNet = $codeNet;
+        $this->libelle = $libelle;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getCode(): ?string
+    {
+        return $this->code;
+    }
+
+    /**
+     * @param null|string $code
+     */
+    public function setCode(?string $code): void
+    {
+        $this->code = $code;
     }
 
     /**
@@ -133,19 +132,4 @@ class Net
         $this->idCadreEmploi = $idCadreEmploi;
     }
 
-    /**
-     * @return int
-     */
-    public function getId(): int
-    {
-        return $this->idNet;
-    }
-
-    /**
-     * @param int $id
-     */
-    public function setId(int $id): void
-    {
-        $this->idNet = $id;
-    }
 }

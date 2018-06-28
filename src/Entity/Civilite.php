@@ -15,57 +15,25 @@ class Civilite
     /**
      * @var int
      *
-     * @ORM\Column(name="ID_CIVILITE", type="integer", nullable=false)
+     * @ORM\Column(name="ID", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="SEQUENCE")
-     * @ORM\SequenceGenerator(sequenceName="CIVILITE_ID_CIVILITE_seq", allocationSize=1, initialValue=1)
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $idCivilite;
+    private $id;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="LIBELLE_CIVILITE", type="string", length=32, nullable=true)
+     * @ORM\Column(name="LIBELLE", type="string", length=32, nullable=true)
      */
-    private $libelleCivilite;
+    private $libelle;
 
-    /**
-     * @return int
-     */
-    public function getIdCivilite(): int
-    {
-        return $this->idCivilite;
-    }
-
-    /**
-     * @param int $idCivilite
-     */
-    public function setIdCivilite(int $idCivilite): void
-    {
-        $this->idCivilite = $idCivilite;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getLibelleCivilite(): ?string
-    {
-        return $this->libelleCivilite;
-    }
-
-    /**
-     * @param null|string $libelleCivilite
-     */
-    public function setLibelleCivilite(?string $libelleCivilite): void
-    {
-        $this->libelleCivilite = $libelleCivilite;
-    }
     /**
      * @return int
      */
     public function getId(): int
     {
-        return $this->idCivilite;
+        return $this->id;
     }
 
     /**
@@ -73,6 +41,23 @@ class Civilite
      */
     public function setId(int $id): void
     {
-        $this->idCivilite = $id;
+        $this->id = $id;
     }
+
+    /**
+     * @return null|string
+     */
+    public function getLibelle(): ?string
+    {
+        return $this->libelle;
+    }
+
+    /**
+     * @param null|string $libelle
+     */
+    public function setLibelle(?string $libelle): void
+    {
+        $this->libelle = $libelle;
+    }
+
 }

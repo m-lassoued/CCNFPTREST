@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * LienPphEtablissement
  *
- * @ORM\Table(name="LIEN_PPH_ETABLISSEMENT", indexes={@ORM\Index(name="fk_pph_has_eet1_idx", columns={"ETABLISSEMENT_ID"}), @ORM\Index(name="fk_lien_pph_e_pph1_idx", columns={"PPH_ID_PPH"}), @ORM\Index(name="fk_pph_has_etht1_idx", columns={"ID_TYPE_LIEN_PE"})})
+ * @ORM\Table(name="LIEN_PPH_ETABLISSEMENT", indexes={@ORM\Index(name="fk_pph_has_eet1_idx", columns={"ETABLISSEMENT_ID"}), @ORM\Index(name="fk_lien_pph_e_pph1_idx", columns={"PPH_ID"}), @ORM\Index(name="fk_pph_has_etht1_idx", columns={"ID_TYPE_LIEN_PE"})})
  * @ORM\Entity
  */
 class LienPphEtablissement
@@ -33,10 +33,10 @@ class LienPphEtablissement
      * @ORM\GeneratedValue(strategy="NONE")
      * @ORM\OneToOne(targetEntity="Pph")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="PPH_ID_PPH", referencedColumnName="ID_PPH")
+     *   @ORM\JoinColumn(name="PPH_ID", referencedColumnName="ID")
      * })
      */
-    private $pphPph;
+    private $pph;
 
     /**
      * @var \Etablissement
@@ -45,7 +45,7 @@ class LienPphEtablissement
      * @ORM\GeneratedValue(strategy="NONE")
      * @ORM\OneToOne(targetEntity="Etablissement")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="ETABLISSEMENT_ID", referencedColumnName="ID_ETABLISSEMENT")
+     *   @ORM\JoinColumn(name="ETABLISSEMENT_ID", referencedColumnName="ID")
      * })
      */
     private $etablissement;
@@ -55,7 +55,7 @@ class LienPphEtablissement
      *
      * @ORM\ManyToOne(targetEntity="TypeLienPphEtablissement")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="ID_TYPE_LIEN_PE", referencedColumnName="ID_TYPE_LIEN_PE")
+     *   @ORM\JoinColumn(name="ID_TYPE_LIEN_PE", referencedColumnName="ID")
      * })
      */
     private $idTypeLienPe;
@@ -95,17 +95,17 @@ class LienPphEtablissement
     /**
      * @return \Pph
      */
-    public function getPphPph(): \Pph
+    public function getPph(): \Pph
     {
-        return $this->pphPph;
+        return $this->pph;
     }
 
     /**
-     * @param \Pph $pphPph
+     * @param \Pph $pph
      */
-    public function setPphPph(\Pph $pphPph): void
+    public function setPph(\Pph $pph): void
     {
-        $this->pphPph = $pphPph;
+        $this->pph = $pph;
     }
 
     /**

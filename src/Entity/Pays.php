@@ -15,26 +15,25 @@ class Pays
     /**
      * @var int
      *
-     * @ORM\Column(name="ID_PAYS", type="integer", nullable=false)
+     * @ORM\Column(name="ID", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="SEQUENCE")
-     * @ORM\SequenceGenerator(sequenceName="PAYS_ID_PAYS_seq", allocationSize=1, initialValue=1)
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $idPays;
+    private $id;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="CODE_PAYS", type="string", length=32, nullable=true)
+     * @ORM\Column(name="CODE", type="string", length=5, nullable=true)
      */
-    private $codePays;
+    private $code;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="LIBELLE_PAYS", type="string", length=45, nullable=true)
+     * @ORM\Column(name="LIBELLE", type="string", length=100, nullable=true)
      */
-    private $libellePays;
+    private $libelle;
 
     /**
      * @var bool|null
@@ -46,49 +45,49 @@ class Pays
     /**
      * @return int
      */
-    public function getIdPays(): int
+    public function getId(): int
     {
-        return $this->idPays;
+        return $this->id;
     }
 
     /**
-     * @param int $idPays
+     * @param int $id
      */
-    public function setIdPays(int $idPays): void
+    public function setId(int $id): void
     {
-        $this->idPays = $idPays;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getCodePays(): ?string
-    {
-        return $this->codePays;
-    }
-
-    /**
-     * @param null|string $codePays
-     */
-    public function setCodePays(?string $codePays): void
-    {
-        $this->codePays = $codePays;
+        $this->id = $id;
     }
 
     /**
      * @return null|string
      */
-    public function getLibellePays(): ?string
+    public function getCode(): ?string
     {
-        return $this->libellePays;
+        return $this->code;
     }
 
     /**
-     * @param null|string $libellePays
+     * @param null|string $code
      */
-    public function setLibellePays(?string $libellePays): void
+    public function setCode(?string $code): void
     {
-        $this->libellePays = $libellePays;
+        $this->code = $code;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getLibelle(): ?string
+    {
+        return $this->libelle;
+    }
+
+    /**
+     * @param null|string $libelle
+     */
+    public function setLibelle(?string $libelle): void
+    {
+        $this->libelle = $libelle;
     }
 
     /**
@@ -106,19 +105,5 @@ class Pays
     {
         $this->actif = $actif;
     }
-    /**
-     * @return int
-     */
-    public function getId(): int
-    {
-        return $this->idPays;
-    }
 
-    /**
-     * @param int $id
-     */
-    public function setId(int $id): void
-    {
-        $this->idPays = $id;
-    }
 }

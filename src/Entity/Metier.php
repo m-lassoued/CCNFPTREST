@@ -15,26 +15,25 @@ class Metier
     /**
      * @var int
      *
-     * @ORM\Column(name="ID_METIER", type="integer", nullable=false)
+     * @ORM\Column(name="ID", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="SEQUENCE")
-     * @ORM\SequenceGenerator(sequenceName="METIER_ID_METIER_seq", allocationSize=1, initialValue=1)
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $idMetier;
+    private $id;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="LIBELLE_METIER", type="string", length=64, nullable=true)
+     * @ORM\Column(name="LIBELLE", type="string", length=64, nullable=true)
      */
-    private $libelleMetier;
+    private $libelle;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="CODE_METIER", type="string", length=64, nullable=true)
+     * @ORM\Column(name="CODE", type="string", length=64, nullable=true)
      */
-    private $codeMetier;
+    private $code;
 
     /**
      * @var bool|null
@@ -48,7 +47,7 @@ class Metier
      *
      * @ORM\ManyToOne(targetEntity="FamilleMetier")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="ID_FAMILLE_METIER", referencedColumnName="ID_FAMILLE_METIER")
+     *   @ORM\JoinColumn(name="ID_FAMILLE_METIER", referencedColumnName="ID")
      * })
      */
     private $idFamilleMetier;
@@ -56,49 +55,49 @@ class Metier
     /**
      * @return int
      */
-    public function getIdMetier(): int
+    public function getId(): int
     {
-        return $this->idMetier;
+        return $this->id;
     }
 
     /**
-     * @param int $idMetier
+     * @param int $id
      */
-    public function setIdMetier(int $idMetier): void
+    public function setId(int $id): void
     {
-        $this->idMetier = $idMetier;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getLibelleMetier(): ?string
-    {
-        return $this->libelleMetier;
-    }
-
-    /**
-     * @param null|string $libelleMetier
-     */
-    public function setLibelleMetier(?string $libelleMetier): void
-    {
-        $this->libelleMetier = $libelleMetier;
+        $this->id = $id;
     }
 
     /**
      * @return null|string
      */
-    public function getCodeMetier(): ?string
+    public function getLibelle(): ?string
     {
-        return $this->codeMetier;
+        return $this->libelle;
     }
 
     /**
-     * @param null|string $codeMetier
+     * @param null|string $libelle
      */
-    public function setCodeMetier(?string $codeMetier): void
+    public function setLibelle(?string $libelle): void
     {
-        $this->codeMetier = $codeMetier;
+        $this->libelle = $libelle;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getCode(): ?string
+    {
+        return $this->code;
+    }
+
+    /**
+     * @param null|string $code
+     */
+    public function setCode(?string $code): void
+    {
+        $this->code = $code;
     }
 
     /**
@@ -133,19 +132,4 @@ class Metier
         $this->idFamilleMetier = $idFamilleMetier;
     }
 
-    /**
-     * @return int
-     */
-    public function getId(): int
-    {
-        return $this->idMetier;
-    }
-
-    /**
-     * @param int $id
-     */
-    public function setId(int $id): void
-    {
-        $this->idMetier = $id;
-    }
 }

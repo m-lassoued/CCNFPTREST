@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Pph{% endblock %}
+
+{% block body %}
+    <h1>Create new Pph</h1>
+
+    {{ include('pph/_form.html.twig') }}
+
+    <a href="{{ path('pph_index') }}">back to list</a>
+{% endblock %}

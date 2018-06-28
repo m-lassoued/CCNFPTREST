@@ -15,19 +15,25 @@ class Filliere
     /**
      * @var int
      *
-     * @ORM\Column(name="ID_FILLIERE", type="integer", nullable=false)
+     * @ORM\Column(name="ID", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="SEQUENCE")
-     * @ORM\SequenceGenerator(sequenceName="FILLIERE_ID_FILLIERE_seq", allocationSize=1, initialValue=1)
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $idFilliere;
+    private $id;
+
+    /**
+     * @var int|null
+     *
+     * @ORM\Column(name="CODE", type="integer", nullable=true)
+     */
+    private $code;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="LIBELLE_FILLIERE", type="string", length=64, nullable=true)
+     * @ORM\Column(name="LIBELLE", type="string", length=50, nullable=true)
      */
-    private $libelleFilliere;
+    private $libelle;
 
     /**
      * @var bool|null
@@ -39,33 +45,49 @@ class Filliere
     /**
      * @return int
      */
-    public function getIdFilliere(): int
+    public function getId(): int
     {
-        return $this->idFilliere;
+        return $this->id;
     }
 
     /**
-     * @param int $idFilliere
+     * @param int $id
      */
-    public function setIdFilliere(int $idFilliere): void
+    public function setId(int $id): void
     {
-        $this->idFilliere = $idFilliere;
+        $this->id = $id;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getCode(): ?int
+    {
+        return $this->code;
+    }
+
+    /**
+     * @param int|null $code
+     */
+    public function setCode(?int $code): void
+    {
+        $this->code = $code;
     }
 
     /**
      * @return null|string
      */
-    public function getLibelleFilliere(): ?string
+    public function getLibelle(): ?string
     {
-        return $this->libelleFilliere;
+        return $this->libelle;
     }
 
     /**
-     * @param null|string $libelleFilliere
+     * @param null|string $libelle
      */
-    public function setLibelleFilliere(?string $libelleFilliere): void
+    public function setLibelle(?string $libelle): void
     {
-        $this->libelleFilliere = $libelleFilliere;
+        $this->libelle = $libelle;
     }
 
     /**
@@ -83,19 +105,5 @@ class Filliere
     {
         $this->actif = $actif;
     }
-    /**
-     * @return int
-     */
-    public function getId(): int
-    {
-        return $this->idFilliere;
-    }
 
-    /**
-     * @param int $id
-     */
-    public function setId(int $id): void
-    {
-        $this->idFilliere = $id;
-    }
 }

@@ -15,40 +15,39 @@ class Adresse
     /**
      * @var int
      *
-     * @ORM\Column(name="ID_ADRESSE", type="integer", nullable=false)
+     * @ORM\Column(name="ID", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="SEQUENCE")
-     * @ORM\SequenceGenerator(sequenceName="ADRESSE_ID_ADRESSE_seq", allocationSize=1, initialValue=1)
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $idAdresse;
+    private $id;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="ADRESSE_1", type="string", length=128, nullable=true)
+     * @ORM\Column(name="ADRESSE_1", type="string", length=50, nullable=true)
      */
     private $adresse1;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="ADRESSE_2", type="string", length=128, nullable=true)
+     * @ORM\Column(name="ADRESSE_2", type="string", length=50, nullable=true)
      */
     private $adresse2;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="ADRESSE_3", type="string", length=128, nullable=true)
+     * @ORM\Column(name="ADRESSE_3", type="string", length=50, nullable=true)
      */
     private $adresse3;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="COMMUNE", type="string", length=64, nullable=true)
+     * @ORM\Column(name="CODE_POSTAL", type="string", length=10, nullable=true)
      */
-    private $commune;
+    private $codePostal;
 
     /**
      * @var string|null
@@ -58,25 +57,11 @@ class Adresse
     private $autreCommune;
 
     /**
-     * @var string|null
-     *
-     * @ORM\Column(name="CODE_POSTAL", type="string", length=32, nullable=true)
-     */
-    private $codePostal;
-
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(name="PAYS", type="string", length=64, nullable=true)
-     */
-    private $pays;
-
-    /**
      * @var \Commune
      *
      * @ORM\ManyToOne(targetEntity="Commune")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="ID_COMMUNE", referencedColumnName="ID_COMMUNE")
+     *   @ORM\JoinColumn(name="ID_COMMUNE", referencedColumnName="ID")
      * })
      */
     private $idCommune;
@@ -86,7 +71,7 @@ class Adresse
      *
      * @ORM\ManyToOne(targetEntity="Pays")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="ID_PAYS", referencedColumnName="ID_PAYS")
+     *   @ORM\JoinColumn(name="ID_PAYS", referencedColumnName="ID")
      * })
      */
     private $idPays;
@@ -96,7 +81,7 @@ class Adresse
      *
      * @ORM\ManyToOne(targetEntity="TypeAdresse")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="ID_TYPE_ADRESSE", referencedColumnName="ID_TYPE_ADRESSE")
+     *   @ORM\JoinColumn(name="ID_TYPE_ADRESSE", referencedColumnName="ID")
      * })
      */
     private $idTypeAdresse;
@@ -104,17 +89,17 @@ class Adresse
     /**
      * @return int
      */
-    public function getIdAdresse(): int
+    public function getId(): int
     {
-        return $this->idAdresse;
+        return $this->id;
     }
 
     /**
-     * @param int $idAdresse
+     * @param int $id
      */
-    public function setIdAdresse(int $idAdresse): void
+    public function setId(int $id): void
     {
-        $this->idAdresse = $idAdresse;
+        $this->id = $id;
     }
 
     /**
@@ -168,38 +153,6 @@ class Adresse
     /**
      * @return null|string
      */
-    public function getCommune(): ?string
-    {
-        return $this->commune;
-    }
-
-    /**
-     * @param null|string $commune
-     */
-    public function setCommune(?string $commune): void
-    {
-        $this->commune = $commune;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getAutreCommune(): ?string
-    {
-        return $this->autreCommune;
-    }
-
-    /**
-     * @param null|string $autreCommune
-     */
-    public function setAutreCommune(?string $autreCommune): void
-    {
-        $this->autreCommune = $autreCommune;
-    }
-
-    /**
-     * @return null|string
-     */
     public function getCodePostal(): ?string
     {
         return $this->codePostal;
@@ -216,17 +169,17 @@ class Adresse
     /**
      * @return null|string
      */
-    public function getPays(): ?string
+    public function getAutreCommune(): ?string
     {
-        return $this->pays;
+        return $this->autreCommune;
     }
 
     /**
-     * @param null|string $pays
+     * @param null|string $autreCommune
      */
-    public function setPays(?string $pays): void
+    public function setAutreCommune(?string $autreCommune): void
     {
-        $this->pays = $pays;
+        $this->autreCommune = $autreCommune;
     }
 
     /**
@@ -275,22 +228,6 @@ class Adresse
     public function setIdTypeAdresse(\TypeAdresse $idTypeAdresse): void
     {
         $this->idTypeAdresse = $idTypeAdresse;
-    }
-
-    /**
-     * @return int
-     */
-    public function getId(): int
-    {
-        return $this->idAdresse;
-    }
-
-    /**
-     * @param int $id
-     */
-    public function setId(int $id): void
-    {
-        $this->idAdresse = $id;
     }
 
 }

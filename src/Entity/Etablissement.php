@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Etablissement
  *
- * @ORM\Table(name="ETABLISSEMENT", indexes={@ORM\Index(name="fk_eco1_idx", columns={"ID_COORDONNEES"}), @ORM\Index(name="fk_epm1_idx", columns={"ID_PMO"})})
+ * @ORM\Table(name="ETABLISSEMENT", indexes={@ORM\Index(name="fk_epm1_idx", columns={"ID_PMO"}), @ORM\Index(name="fk_e_adresse1_idx", columns={"ID_ADRESSE"})})
  * @ORM\Entity
  */
 class Etablissement
@@ -15,17 +15,16 @@ class Etablissement
     /**
      * @var int
      *
-     * @ORM\Column(name="ID_ETABLISSEMENT", type="integer", nullable=false)
+     * @ORM\Column(name="ID", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="SEQUENCE")
-     * @ORM\SequenceGenerator(sequenceName="ETABLISSEMENT_ID_ETABLISSEMENT", allocationSize=1, initialValue=1)
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $idEtablissement;
+    private $id;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="SIRET", type="string", length=64, nullable=true)
+     * @ORM\Column(name="SIRET", type="string", length=15, nullable=true)
      */
     private $siret;
 
@@ -39,44 +38,44 @@ class Etablissement
     /**
      * @var string|null
      *
-     * @ORM\Column(name="NOM", type="string", length=64, nullable=true)
+     * @ORM\Column(name="NOM", type="string", length=75, nullable=true)
      */
     private $nom;
-
-    /**
-     * @var \Coordonnees
-     *
-     * @ORM\ManyToOne(targetEntity="Coordonnees")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="ID_COORDONNEES", referencedColumnName="ID_COORDONNEES")
-     * })
-     */
-    private $idCoordonnees;
 
     /**
      * @var \PersonneMorale
      *
      * @ORM\ManyToOne(targetEntity="PersonneMorale")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="ID_PMO", referencedColumnName="ID_PMO")
+     *   @ORM\JoinColumn(name="ID_PMO", referencedColumnName="ID")
      * })
      */
     private $idPmo;
 
     /**
+     * @var \Adresse
+     *
+     * @ORM\ManyToOne(targetEntity="Adresse")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="ID_ADRESSE", referencedColumnName="ID")
+     * })
+     */
+    private $idAdresse;
+
+    /**
      * @return int
      */
-    public function getIdEtablissement(): int
+    public function getId(): int
     {
-        return $this->idEtablissement;
+        return $this->id;
     }
 
     /**
-     * @param int $idEtablissement
+     * @param int $id
      */
-    public function setIdEtablissement(int $idEtablissement): void
+    public function setId(int $id): void
     {
-        $this->idEtablissement = $idEtablissement;
+        $this->id = $id;
     }
 
     /**
@@ -128,22 +127,6 @@ class Etablissement
     }
 
     /**
-     * @return \Coordonnees
-     */
-    public function getIdCoordonnees(): \Coordonnees
-    {
-        return $this->idCoordonnees;
-    }
-
-    /**
-     * @param \Coordonnees $idCoordonnees
-     */
-    public function setIdCoordonnees(\Coordonnees $idCoordonnees): void
-    {
-        $this->idCoordonnees = $idCoordonnees;
-    }
-
-    /**
      * @return \PersonneMorale
      */
     public function getIdPmo(): \PersonneMorale
@@ -158,19 +141,21 @@ class Etablissement
     {
         $this->idPmo = $idPmo;
     }
+
     /**
-     * @return int
+     * @return \Adresse
      */
-    public function getId(): int
+    public function getIdAdresse(): \Adresse
     {
-        return $this->idEtablissement;
+        return $this->idAdresse;
     }
 
     /**
-     * @param int $id
+     * @param \Adresse $idAdresse
      */
-    public function setId(int $id): void
+    public function setIdAdresse(\Adresse $idAdresse): void
     {
-        $this->idCoordonnees = $id;
+        $this->idAdresse = $idAdresse;
     }
+
 }

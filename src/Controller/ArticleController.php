@@ -22,7 +22,7 @@ class ArticleController extends Controller
 {
     /**
      * Lists all Articles.
-     * @FOSRest\Get("/PP")
+     * @FOSRest\Get("/articles")
      *
      * @return array
      */

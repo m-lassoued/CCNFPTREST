@@ -15,26 +15,25 @@ class TypeLienPphEtablissement
     /**
      * @var int
      *
-     * @ORM\Column(name="ID_TYPE_LIEN_PE", type="integer", nullable=false)
+     * @ORM\Column(name="ID", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="SEQUENCE")
-     * @ORM\SequenceGenerator(sequenceName="TYPE_LIEN_PPH_ETABLISSEMENT_ID", allocationSize=1, initialValue=1)
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $idTypeLienPe;
+    private $id;
 
     /**
      * @var string|null
      *
-     * @ORM\Column(name="LIBELLE_TYPE_LIEN", type="string", length=32, nullable=true)
+     * @ORM\Column(name="LIBELLE", type="string", length=75, nullable=true)
      */
-    private $libelleTypeLien;
+    private $libelle;
 
     /**
-     * @var string|null
+     * @var int|null
      *
-     * @ORM\Column(name="CODE_LIEN_PE", type="string", length=45, nullable=true)
+     * @ORM\Column(name="CODE", type="integer", nullable=true)
      */
-    private $codeLienPe;
+    private $code;
 
     /**
      * @var string|null
@@ -53,49 +52,49 @@ class TypeLienPphEtablissement
     /**
      * @return int
      */
-    public function getIdTypeLienPe(): int
+    public function getId(): int
     {
-        return $this->idTypeLienPe;
+        return $this->id;
     }
 
     /**
-     * @param int $idTypeLienPe
+     * @param int $id
      */
-    public function setIdTypeLienPe(int $idTypeLienPe): void
+    public function setId(int $id): void
     {
-        $this->idTypeLienPe = $idTypeLienPe;
-    }
-
-    /**
-     * @return null|string
-     */
-    public function getLibelleTypeLien(): ?string
-    {
-        return $this->libelleTypeLien;
-    }
-
-    /**
-     * @param null|string $libelleTypeLien
-     */
-    public function setLibelleTypeLien(?string $libelleTypeLien): void
-    {
-        $this->libelleTypeLien = $libelleTypeLien;
+        $this->id = $id;
     }
 
     /**
      * @return null|string
      */
-    public function getCodeLienPe(): ?string
+    public function getLibelle(): ?string
     {
-        return $this->codeLienPe;
+        return $this->libelle;
     }
 
     /**
-     * @param null|string $codeLienPe
+     * @param null|string $libelle
      */
-    public function setCodeLienPe(?string $codeLienPe): void
+    public function setLibelle(?string $libelle): void
     {
-        $this->codeLienPe = $codeLienPe;
+        $this->libelle = $libelle;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getCode(): ?int
+    {
+        return $this->code;
+    }
+
+    /**
+     * @param int|null $code
+     */
+    public function setCode(?int $code): void
+    {
+        $this->code = $code;
     }
 
     /**
@@ -129,19 +128,5 @@ class TypeLienPphEtablissement
     {
         $this->actif = $actif;
     }
-    /**
-     * @return int
-     */
-    public function getId(): int
-    {
-        return $this->idTypeLienPe;
-    }
 
-    /**
-     * @param int $id
-     */
-    public function setId(int $id): void
-    {
-        $this->idTypeLienPe = $id;
-    }
 }

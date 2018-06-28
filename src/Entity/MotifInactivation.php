@@ -5,12 +5,12 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * TypeLienPphPph
+ * MotifInactivation
  *
- * @ORM\Table(name="TYPE_LIEN_PPH_PPH")
+ * @ORM\Table(name="MOTIF_INACTIVATION")
  * @ORM\Entity
  */
-class TypeLienPphPph
+class MotifInactivation
 {
     /**
      * @var int
@@ -22,9 +22,16 @@ class TypeLienPphPph
     private $id;
 
     /**
+     * @var int|null
+     *
+     * @ORM\Column(name="CODE", type="integer", nullable=true)
+     */
+    private $code;
+
+    /**
      * @var string|null
      *
-     * @ORM\Column(name="LIBELLE", type="string", length=64, nullable=true)
+     * @ORM\Column(name="LIBELLE", type="string", length=100, nullable=true)
      */
     private $libelle;
 
@@ -49,6 +56,22 @@ class TypeLienPphPph
     public function setId(int $id): void
     {
         $this->id = $id;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getCode(): ?int
+    {
+        return $this->code;
+    }
+
+    /**
+     * @param int|null $code
+     */
+    public function setCode(?int $code): void
+    {
+        $this->code = $code;
     }
 
     /**
@@ -82,5 +105,4 @@ class TypeLienPphPph
     {
         $this->actif = $actif;
     }
-
 }

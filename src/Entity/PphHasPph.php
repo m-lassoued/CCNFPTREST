@@ -31,7 +31,7 @@ class PphHasPph
      *
      * @ORM\ManyToOne(targetEntity="TypeLienPphPph")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="ID_TYPE_LIEN", referencedColumnName="ID_TYPE_LIEN")
+     *   @ORM\JoinColumn(name="ID_TYPE_LIEN", referencedColumnName="ID")
      * })
      */
     private $idTypeLien;
@@ -43,7 +43,7 @@ class PphHasPph
      * @ORM\GeneratedValue(strategy="NONE")
      * @ORM\OneToOne(targetEntity="Pph")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="PPH_ID_PPH", referencedColumnName="ID_PPH")
+     *   @ORM\JoinColumn(name="PPH_ID_PPH", referencedColumnName="ID")
      * })
      */
     private $pphPph;
@@ -55,7 +55,7 @@ class PphHasPph
      * @ORM\GeneratedValue(strategy="NONE")
      * @ORM\OneToOne(targetEntity="Pph")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="PPH_ID_PPH1", referencedColumnName="ID_PPH")
+     *   @ORM\JoinColumn(name="PPH_ID_PPH1", referencedColumnName="ID")
      * })
      */
     private $pphPph1;
