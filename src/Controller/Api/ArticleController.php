@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Api;
 
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,7 +32,7 @@ class ArticleController extends Controller
         
         // query for a single Product by its primary key (usually "id")
         $article = $repository->findall();
-        
+
         return View::create($article, Response::HTTP_OK , []);
     }
 

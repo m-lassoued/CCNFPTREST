@@ -3,7 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use JMS\Serializer\Annotation\Groups;
 /**
  * Pph
  *
@@ -25,6 +25,7 @@ class Pph
      * @var string|null
      *
      * @ORM\Column(name="NOM_NAISSANCE", type="string", length=50, nullable=true)
+     * @Groups({"pph"})
      */
     private $nomNaissance;
 
@@ -32,6 +33,7 @@ class Pph
      * @var string|null
      *
      * @ORM\Column(name="NOM_USAGE", type="string", length=50, nullable=true)
+     * @Groups({"pph"})
      */
     private $nomUsage;
 
@@ -39,6 +41,7 @@ class Pph
      * @var string|null
      *
      * @ORM\Column(name="PRENOM", type="string", length=50, nullable=true)
+     * @Groups({"pph"})
      */
     private $prenom;
 
@@ -46,6 +49,7 @@ class Pph
      * @var \DateTime|null
      *
      * @ORM\Column(name="DATE_NAISSANCE", type="date", nullable=true)
+     * @Groups({"pph"})
      */
     private $dateNaissance;
 
@@ -53,6 +57,7 @@ class Pph
      * @var \DateTime|null
      *
      * @ORM\Column(name="DATE_DECES", type="date", nullable=true)
+     * @Groups({"pph"})
      */
     private $dateDeces;
 
@@ -60,6 +65,7 @@ class Pph
      * @var \DateTime|null
      *
      * @ORM\Column(name="DATE_ENTREE_FONCTION_PUBLIQUE", type="date", nullable=true)
+     * @Groups({"pph"})
      */
     private $dateEntreeFonctionPublique;
 
@@ -67,6 +73,7 @@ class Pph
      * @var bool|null
      *
      * @ORM\Column(name="EST_DECEDE", type="boolean", nullable=true)
+     * @Groups({"pph"})
      */
     private $estDecede;
 
@@ -74,6 +81,7 @@ class Pph
      * @var bool|null
      *
      * @ORM\Column(name="EST_RETRAITE", type="boolean", nullable=true)
+     * @Groups({"pph"})
      */
     private $estRetraite;
 
@@ -81,6 +89,7 @@ class Pph
      * @var bool|null
      *
      * @ORM\Column(name="A_QUITTE_FONCTION_PUBLIQUE", type="boolean", nullable=true)
+     * @Groups({"pph"})
      */
     private $aQuitteFonctionPublique;
 
@@ -88,6 +97,7 @@ class Pph
      * @var \DateTime|null
      *
      * @ORM\Column(name="DATE_ENTREE_DANS_GRADE", type="date", nullable=true)
+     * @Groups({"pph"})
      */
     private $dateEntreeDansGrade;
 
@@ -95,6 +105,7 @@ class Pph
      * @var string|null
      *
      * @ORM\Column(name="CATEGORIE", type="string", length=50, nullable=true)
+     * @Groups({"pph"})
      */
     private $categorie;
 
@@ -102,6 +113,7 @@ class Pph
      * @var bool|null
      *
      * @ORM\Column(name="ENCADREMENT", type="boolean", nullable=true)
+     * @Groups({"pph"})
      */
     private $encadrement;
 
@@ -109,6 +121,7 @@ class Pph
      * @var bool|null
      *
      * @ORM\Column(name="IDENTITE_VERIFIEE", type="boolean", nullable=true)
+     * @Groups({"pph"})
      */
     private $identiteVerifiee;
 
@@ -116,6 +129,7 @@ class Pph
      * @var \DateTime|null
      *
      * @ORM\Column(name="DATE_INACTIVATION", type="date", nullable=true)
+     * @Groups({"pph"})
      */
     private $dateInactivation;
 
@@ -123,6 +137,7 @@ class Pph
      * @var string|null
      *
      * @ORM\Column(name="LIBELLE_GRADE", type="string", length=75, nullable=true)
+     * @Groups({"pph"})
      */
     private $libelleGrade;
 
@@ -130,6 +145,7 @@ class Pph
      * @var string|null
      *
      * @ORM\Column(name="REFERENCE_PERSONNE_PHYSIQUE", type="string", length=64, nullable=true)
+     * @Groups({"pph"})
      */
     private $referencePersonnePhysique;
 
@@ -137,6 +153,7 @@ class Pph
      * @var bool|null
      *
      * @ORM\Column(name="EST_AGENT", type="boolean", nullable=true)
+     * @Groups({"pph"})
      */
     private $estAgent;
 
@@ -144,6 +161,7 @@ class Pph
      * @var bool|null
      *
      * @ORM\Column(name="EST_INTERVENANT", type="boolean", nullable=true)
+     * @Groups({"pph"})
      */
     private $estIntervenant;
 
@@ -151,6 +169,7 @@ class Pph
      * @var bool|null
      *
      * @ORM\Column(name="EST_GESTIONNAIRE_CT", type="boolean", nullable=true)
+     * @Groups({"pph"})
      */
     private $estGestionnaireCt;
 
@@ -158,6 +177,7 @@ class Pph
      * @var string|null
      *
      * @ORM\Column(name="ID_COMPTE_PORTAIL_AGENT", type="string", length=45, nullable=true)
+     * @Groups({"pph"})
      */
     private $idComptePortailAgent;
 
@@ -165,6 +185,7 @@ class Pph
      * @var int|null
      *
      * @ORM\Column(name="ID_FICHE_AGENT_IEL", type="integer", nullable=true)
+     * @Groups({"pph"})
      */
     private $idFicheAgentIel;
 
@@ -172,6 +193,7 @@ class Pph
      * @var bool|null
      *
      * @ORM\Column(name="EST_DEDOUBLONE", type="boolean", nullable=true)
+     * @Groups({"pph"})
      */
     private $estDedoublone;
 
@@ -179,6 +201,7 @@ class Pph
      * @var string|null
      *
      * @ORM\Column(name="NOM_NAISSANCE_CONDENSE", type="string", length=50, nullable=true)
+     * @Groups({"pph"})
      */
     private $nomNaissanceCondense;
 
@@ -186,6 +209,7 @@ class Pph
      * @var string|null
      *
      * @ORM\Column(name="PRENOM_NAISSANCE_CONDENSE", type="string", length=50, nullable=true)
+     * @Groups({"pph"})
      */
     private $prenomNaissanceCondense;
 
@@ -193,6 +217,7 @@ class Pph
      * @var string|null
      *
      * @ORM\Column(name="NOM_USAGE_CONDENSE", type="string", length=50, nullable=true)
+     * @Groups({"pph"})
      */
     private $nomUsageCondense;
 
