@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Coordonnees{% endblock %}
+
+{% block body %}
+    <h1>Coordonnees</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ coordonnee.id }}</td>
+            </tr>
+            <tr>
+                <th>TelephoneFixe</th>
+                <td>{{ coordonnee.telephoneFixe }}</td>
+            </tr>
+            <tr>
+                <th>TelephonePortable</th>
+                <td>{{ coordonnee.telephonePortable }}</td>
+            </tr>
+            <tr>
+                <th>AdresseEPrincipale</th>
+                <td>{{ coordonnee.adresseEPrincipale }}</td>
+            </tr>
+            <tr>
+                <th>AdresseESecondaire</th>
+                <td>{{ coordonnee.adresseESecondaire }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('coordonnees_index') }}">back to list</a>
+
+    <a href="{{ path('coordonnees_edit', {'id': coordonnee.id}) }}">edit</a>
+
+    {{ include('coordonnees/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Coordonnees index{% endblock %}
+
+{% block body %}
+    <h1>Coordonnees index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>TelephoneFixe</th>
+                <th>TelephonePortable</th>
+                <th>AdresseEPrincipale</th>
+                <th>AdresseESecondaire</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for coordonnee in coordonnees %}
+            <tr>
+                <td>{{ coordonnee.id }}</td>
+                <td>{{ coordonnee.telephoneFixe }}</td>
+                <td>{{ coordonnee.telephonePortable }}</td>
+                <td>{{ coordonnee.adresseEPrincipale }}</td>
+                <td>{{ coordonnee.adresseESecondaire }}</td>
+                <td>
+                    <a href="{{ path('coordonnees_show', {'id': coordonnee.id}) }}">show</a>
+                    <a href="{{ path('coordonnees_edit', {'id': coordonnee.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('coordonnees_new') }}">Create new</a>
+{% endblock %}

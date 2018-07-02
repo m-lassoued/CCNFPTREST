@@ -24,4 +24,5 @@ fos_rest:
             - { path: '^/pph/', priorities: ['html'], fallback_format: 'html', prefer_extension: false }
             - { path: '^/api/', priorities: ['json'], fallback_format: 'json', prefer_extension: false }
     body_listener:
-        enabled: false
+        enabled: true
+        array_normalizer: fos_rest.normalizer.camel_keys

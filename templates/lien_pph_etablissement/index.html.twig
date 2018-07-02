@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}LienPphEtablissement index{% endblock %}
+
+{% block body %}
+    <h1>LienPphEtablissement index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>DateDebut</th>
+                <th>DateFin</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for lien_pph_etablissement in lien_pph_etablissements %}
+            <tr>
+                <td>{{ lien_pph_etablissement.dateDebut ? lien_pph_etablissement.dateDebut|date('Y-m-d') : '' }}</td>
+                <td>{{ lien_pph_etablissement.dateFin ? lien_pph_etablissement.dateFin|date('Y-m-d') : '' }}</td>
+                <td>
+                    <a href="{{ path('lien_pph_etablissement_show', {'pph': lien_pph_etablissement.pph}) }}">show</a>
+                    <a href="{{ path('lien_pph_etablissement_edit', {'pph': lien_pph_etablissement.pph}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('lien_pph_etablissement_new') }}">Create new</a>
+{% endblock %}

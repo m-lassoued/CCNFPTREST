@@ -2,19 +2,15 @@
 
 namespace App\Controller\Api;
 
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use App\Form\PphType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\Controller\Annotations as FOSRest;
-use FOS\RestBundle\Controller\Annotations\QueryParam;
-use FOS\RestBundle\Request\ParamFetcher;
 use Nelmio\ApiDocBundle\Annotation\Model;
-use Nelmio\ApiDocBundle\Annotation\Security;
 use Swagger\Annotations as SWG;
 use App\Entity\Pph;
 
@@ -27,7 +23,7 @@ class PphController extends Controller
 {
 
     /**
-     * Récupère la liste des personnes physiques.
+     * Récupèrer la liste des personnes physiques.
      *
      * @FOSRest\View(populateDefaultVars=false, serializerGroups={"pph"})
      * @FOSRest\Get("/pphs")
@@ -48,8 +44,9 @@ class PphController extends Controller
      *
      * @return array
      */
-    public function getPphAction(Request $request)
+    public function getPphsAction(Request $request)
     {
+
         $offset = $request->get('offset');
         $limit = $request->get('limit');
         $sort = $request->get('sort')?$request->get('sort'):'asc';
@@ -59,9 +56,31 @@ class PphController extends Controller
         // query for a single Product by its primary key (usually "id")
         $pphs = $repository->findBy([],['nomUsage'=>$sort], $limit, $offset);
 
-        return View::create($pphs, Response::HTTP_OK , []);
+        return View::create($pphs, Response::HTTP_OK );
     }
 
+    /**
+     * Récupèrer une personne physique.
+     *
+     * @ParamConverter("pph", class="App:Pph")
+     * @FOSRest\View(populateDefaultVars=false, serializerGroups={"pph"})
+     * @FOSRest\Get("/pphs/{id}")
+     *
+     * @SWG\Response(
+     *     response=200,
+     *     description="Returns the pph",
+     * )
+     * @SWG\Tag(name="pphs")
+     * @return array
+     */
+    public function getPphAction(Request $request, Pph $pph)
+    {
+        if (empty($pph)) {
+            return View::create(['message' => 'Pph not found'], Response::HTTP_NOT_FOUND);
+        }
+
+        return View::create($pph, Response::HTTP_OK );
+    }
     /**
      * Créer une personne physique.
      *
@@ -76,25 +95,16 @@ class PphController extends Controller
      *         @SWG\Items(ref=@Model(type=Pph::class))
      *     )
      * )
-     * @SWG\Parameter(name="nom_naissance",in="formData",type="string",description="")
-     * @SWG\Parameter(name="nom_usage",in="formData",type="string",description="")
-     * @SWG\Parameter(name="prenom",in="formData",type="string",description="")
-     * @SWG\Parameter(name="date_naissance",in="formData",type="string",description="")
-     * @SWG\Parameter(name="date_entree_fonction_publique",in="formData",type="string",description="")
-     * @SWG\Parameter(name="est_decede",in="formData",type="boolean",description="")
-     * @SWG\Parameter(name="est_retraite",in="formData",type="boolean",description="")
-     * @SWG\Parameter(name="a_quitte_fonction_publique",in="formData",type="boolean",description="")
-     * @SWG\Parameter(name="date_entree_dans_grade",in="formData",type="string",description="")
-     * @SWG\Parameter(name="categorie",in="formData",type="string",description="")
-     * @SWG\Parameter(name="date_entree_dans_grade",in="formData",type="string",description="")
-     * @SWG\Parameter(name="encadrement",in="formData",type="string",description="")
-     * @SWG\Parameter(name="identite_verifiee",in="formData",type="boolean",description="")
-     * @SWG\Parameter(name="libelle_grade",in="formData",type="string",description="")
-     * @SWG\Parameter(name="est_agent",in="formData",type="boolean",description="")
-     * @SWG\Parameter(name="est_intervenant",in="formData",type="boolean",description="")
-     * @SWG\Parameter(name="est_gestionnaire_ct",in="formData",type="boolean",description="")
-     * @SWG\Parameter(name="id_fiche_agent_iel",in="formData",type="integer",description="")
      *
+     * @SWG\Parameter(
+     *    name="body",
+     *    in="body",
+     *    @SWG\Schema(
+     *       type="object",
+     *        @Model(type=Pph::class)
+     *    )
+        *
+     * )
      * @SWG\Tag(name="pphs")
      *
      * @return array
@@ -102,34 +112,152 @@ class PphController extends Controller
     public function postPphAction(Request $request)
     {
         $pph = new Pph();
+        $form = $this->createForm(PphType::class, $pph);
 
-        $pph->setNomNaissance($request->get('nom_naissance'));
-        $pph->setNomUsage($request->get('nom_usage'));
-        $pph->setPrenom($request->get('prenom'));
-        $pph->setNomNaissanceCondense(strtoupper($request->get('nom_naissance')));
-        $pph->setPrenomNaissanceCondense(strtoupper($request->get('prenom')));
-        $pph->setNomUsageCondense(strtoupper($request->get('nom_usage')));
-        $pph->setDateNaissance(new \DateTime($request->get('date_naissance')));
-        $pph->setDateEntreeFonctionPublique(new \DateTime($request->get('date_entree_fonction_publique')));
-        $pph->setEstDecede($request->get('est_decede'));
-        $pph->setEstRetraite($request->get('est_retraite'));
-        $pph->setAQuitteFonctionPublique($request->get('a_quitte_fonction_publique'));
-        $pph->setDateEntreeDansGrade(new \DateTime($request->get('date_entree_dans_grade')));
-        $pph->setCategorie($request->get('categorie'));
-        $pph->setEncadrement($request->get('encadrement'));
-        $pph->setIdentiteVerifiee($request->get('identite_verifiee'));
-        $pph->setLibelleGrade($request->get('libelle_grade'));
-        $pph->setReferencePersonnePhysique($pph->getNomNaissanceCondense().$pph->getPrenomNaissanceCondense().'ID'.md5(time()));
-        $pph->setEstAgent($request->get('est_agent'));
-        $pph->setEstIntervenant($request->get('est_intervenant'));
-        $pph->setEstGestionnaireCt($request->get('est_gestionnaire_ct'));
-        $pph->setIdComptePortailAgent($request->get('id_fiche_agent_iel'));
+        $form->submit($request->request->all()); // Validation des données
+
+        if (!$form->isValid()) {
+            return View::create($form->getErrors(), Response::HTTP_BAD_REQUEST );
+        }
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($pph);
         $em->flush();
 
-        return View::create($pph, Response::HTTP_CREATED , []);
+        return View::create($pph, Response::HTTP_CREATED );
         
+    }
+
+    /**
+     *
+     * Modifier une personne physique.
+     *
+     * @FOSRest\View(populateDefaultVars=false, serializerGroups={"pph"})
+     * @FOSRest\Put("/pphs/{id}")
+     *
+     * @SWG\Response(
+     *     response=200,
+     *     description="Returns the pph updated",
+     *     @SWG\Schema(
+     *         type="array",
+     *         @SWG\Items(ref=@Model(type=Pph::class))
+     *     )
+     * )
+     *
+     * @SWG\Parameter(
+     *    name="body",
+     *    in="body",
+     *    @SWG\Schema(
+     *       type="object",
+     *        @Model(type=Pph::class)
+     *    )
+     *
+     * )
+     * @SWG\Tag(name="pphs")
+     *
+     */
+    public function updatePphAction(Request $request, $id)
+    {
+        return $this->updatePph($request, true, $id);
+    }
+
+    /**
+     *
+     * Modification partielle d'une personne physique.
+     *
+     * @FOSRest\View(populateDefaultVars=false, serializerGroups={"pph"})
+     * @FOSRest\Patch("/pphs/{id}")
+     *
+     * @SWG\Response(
+     *     response=200,
+     *     description="Returns the pph patched",
+     *     @SWG\Schema(
+     *         type="array",
+     *         @SWG\Items(ref=@Model(type=Pph::class))
+     *     )
+     * )
+     *
+     * @SWG\Parameter(
+     *    name="body",
+     *    in="body",
+     *    @SWG\Schema(
+     *       type="object",
+     *        @Model(type=Pph::class)
+     *    )
+     *
+     * )
+     * @SWG\Tag(name="pphs")
+     */
+    public function patchPphAction(Request $request, $id)
+    {
+        return $this->updatePph($request, false, $id);
+    }
+
+
+    private function updatePph(Request $request, $clearMissing, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $pph = $em
+            ->getRepository('App:Pph')
+            ->find($id);
+        /* @var $pph Pph */
+
+        if (empty($pph)) {
+            return View::create(['message' => 'Pph not found'], Response::HTTP_NOT_FOUND);
+        }
+
+        $form = $this->createForm(PphType::class, $pph);
+
+        // Le paramètre $clearMissing false dit à Symfony de garder les valeurs dans notre
+        // entité si l'utilisateur n'en fournit pas une dans sa requête
+        $form->submit($request->request->all(), $clearMissing);
+        if (!$form->isValid()) {
+            return View::create($form->getErrors(), Response::HTTP_BAD_REQUEST );
+        }
+
+        $em->persist($pph);
+        $em->flush();
+        
+        return View::create($pph, Response::HTTP_CREATED );
+
+    }
+
+    /**
+     *
+     * Supprimer une personne physique.
+     *
+     * @FOSRest\View(populateDefaultVars=false, serializerGroups={"pph"})
+     * @FOSRest\Delete("/pphs/{pph}")
+     *
+     * @SWG\Response(
+     *     response=200,
+     *     description="Returns the if pph was deleted"
+     * )
+     *
+     * @SWG\Tag(name="pphs")
+     */
+    public function removePphAction(Request $request, $pph)
+    {
+
+        $em = $this->getDoctrine()->getManager();
+        $pph = $em
+            ->getRepository('App:Pph')
+            ->find($pph); // L'identifiant en tant que paramètre n'est plus nécessaire
+
+        /* @var $pph Pph */
+        if (empty($pph)) {
+            return View::create(['message' => 'Pph not found'], Response::HTTP_NOT_FOUND);
+        }
+
+        // TODO supprimer les relations avec $pph
+        /*foreach ($pphHasPphs as $pphHasPph)
+        {
+            $em->remove($pphHasPph);
+        }*/
+
+        $em->remove($pph);
+        $em->flush();
+
+        return View::create(['message' => 'Pph removed'], Response::HTTP_OK );
     }
 }

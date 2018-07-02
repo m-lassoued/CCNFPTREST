@@ -12,6 +12,7 @@ use App\Entity\Pph;
 use App\Entity\SourceDonnees;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -23,17 +24,17 @@ class PphType extends AbstractType
             ->add('nomNaissance')
             ->add('nomUsage')
             ->add('prenom')
-            ->add('dateNaissance')
-            ->add('dateDeces')
-            ->add('dateEntreeFonctionPublique')
+            ->add('dateNaissance', DateTimeType::class, array('widget' => 'single_text'))
+            ->add('dateDeces', DateTimeType::class, array('widget' => 'single_text'))
+            ->add('dateEntreeFonctionPublique', DateTimeType::class, array('widget' => 'single_text'))
             ->add('estDecede')
             ->add('estRetraite')
             ->add('aQuitteFonctionPublique')
-            ->add('dateEntreeDansGrade')
+            ->add('dateEntreeDansGrade', DateTimeType::class, array('widget' => 'single_text'))
             ->add('categorie')
             ->add('encadrement')
             ->add('identiteVerifiee')
-            ->add('dateInactivation')
+            ->add('dateInactivation', DateTimeType::class, array('widget' => 'single_text'))
             ->add('libelleGrade')
             ->add('referencePersonnePhysique')
             ->add('estAgent')
@@ -45,13 +46,6 @@ class PphType extends AbstractType
             ->add('nomNaissanceCondense')
             ->add('prenomNaissanceCondense')
             ->add('nomUsageCondense')
-            ->add('idCivilite', EntityType::class, array('class' => Civilite::class, 'choice_label' => 'libelle'))
-            ->add('idCoordonnees', EntityType::class, array('class' => Coordonnees::class, 'choice_label' => 'libelle'))
-            ->add('idEtatPph', EntityType::class, array('class' => EtatPph::class, 'choice_label' => 'libelle'))
-            ->add('idMetier', EntityType::class, array('class' => Metier::class, 'choice_label' => 'libelle'))
-            ->add('idMotifInactivation', EntityType::class, array('class' => MotifInactivation::class, 'choice_label' => 'libelle'))
-            ->add('idNet', EntityType::class, array('class' => Net::class, 'choice_label' => 'libelle'))
-            ->add('idSourceDonnees', EntityType::class, array('class' => SourceDonnees::class, 'choice_label' => 'libelle'))
         ;
     }
 
@@ -59,6 +53,7 @@ class PphType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Pph::class,
+            'csrf_protection' => false
         ]);
     }
 }

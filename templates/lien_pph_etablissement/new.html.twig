@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New LienPphEtablissement{% endblock %}
+
+{% block body %}
+    <h1>Create new LienPphEtablissement</h1>
+
+    {{ include('lien_pph_etablissement/_form.html.twig') }}
+
+    <a href="{{ path('lien_pph_etablissement_index') }}">back to list</a>
+{% endblock %}
