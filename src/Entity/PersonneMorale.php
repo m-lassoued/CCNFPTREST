@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\Groups;
 
 /**
  * PersonneMorale
@@ -25,6 +26,7 @@ class PersonneMorale
      * @var string|null
      *
      * @ORM\Column(name="SIREN", type="string", length=15, nullable=true)
+     * @Groups({"personneMorale"})
      */
     private $siren;
 
@@ -32,6 +34,7 @@ class PersonneMorale
      * @var string|null
      *
      * @ORM\Column(name="NOM", type="string", length=75, nullable=true)
+     * @Groups({"personneMorale"})
      */
     private $nom;
 
@@ -47,6 +50,7 @@ class PersonneMorale
      *     @ORM\JoinColumn(name="ID_PMO1", referencedColumnName="ID")
      *   }
      * )
+     * @Groups({"personneMorale"})
      */
     private $idPmo1;
 

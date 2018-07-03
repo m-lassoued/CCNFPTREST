@@ -23,6 +23,7 @@ class MetierType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Metier::class,
+            'csrf_protection' => false
         ]);
     }
 }

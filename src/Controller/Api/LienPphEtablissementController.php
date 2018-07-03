@@ -25,7 +25,7 @@ class LienPphEtablissementController extends Controller
     /**
      * Récupèrer la liste des liens Personne physique Etablissement.
      *
-     * @FOSRest\View(populateDefaultVars=false, serializerGroups={"lienPphEtablissement"})
+     * @FOSRest\View(populateDefaultVars=false, serializerGroups={"lienPphEtablissement","pph","etablissement", "adresse"})
      * @FOSRest\Get("/lienPphEtablissements")
      *
      * @SWG\Response(
@@ -63,8 +63,8 @@ class LienPphEtablissementController extends Controller
      * Récupèrer un lien Personne physique Etablissement.
      *
      * @ParamConverter("lienPphEtablissement", class="App:LienPphEtablissement")
-     * @FOSRest\View(populateDefaultVars=false, serializerGroups={"lienPphEtablissement"})
-     * @FOSRest\Get("/lienPphEtablissements/{id}")
+     * @FOSRest\View(populateDefaultVars=false, serializerGroups={"lienPphEtablissement","pph","etablissement", "adresse"})
+     * @FOSRest\Get("/lienPphEtablissements/{pph}/{etablissement}")
      *
      * @SWG\Response(
      *     response=200,
@@ -84,7 +84,7 @@ class LienPphEtablissementController extends Controller
     /**
      * Créer un lien Personne physique Etablissement.
      *
-     * @FOSRest\View(populateDefaultVars=false, serializerGroups={"lienPphEtablissement"})
+     * @FOSRest\View(populateDefaultVars=false, serializerGroups={"lienPphEtablissement","pph","etablissement", "adresse"})
      * @FOSRest\Post("/lienPphEtablissement/new")
      *
      * @SWG\Response(
@@ -117,7 +117,7 @@ class LienPphEtablissementController extends Controller
         $form->submit($request->request->all()); // Validation des données
 
         if (!$form->isValid()) {
-            return View::create($form->getErrors(), Response::HTTP_BAD_REQUEST );
+            return View::create((string) $form->getErrors(true, false), Response::HTTP_BAD_REQUEST );
         }
 
         $em = $this->getDoctrine()->getManager();
@@ -132,8 +132,8 @@ class LienPphEtablissementController extends Controller
      *
      * Modifier un lien Personne physique Etablissement.
      *
-     * @FOSRest\View(populateDefaultVars=false, serializerGroups={"lienPphEtablissement"})
-     * @FOSRest\Put("/lienPphEtablissements/{id}")
+     * @FOSRest\View(populateDefaultVars=false, serializerGroups={"lienPphEtablissement","pph","etablissement", "adresse"})
+     * @FOSRest\Put("/lienPphEtablissements/{pph}/{etablissement}")
      *
      * @SWG\Response(
      *     response=200,
@@ -156,17 +156,17 @@ class LienPphEtablissementController extends Controller
      * @SWG\Tag(name="lienPphEtablissements")
      *
      */
-    public function updateLienPphEtablissementAction(Request $request, $id)
+    public function updateLienPphEtablissementAction(Request $request, $pph, $etablissement)
     {
-        return $this->updateLienPphEtablissement($request, true, $id);
+        return $this->updateLienPphEtablissement($request, true, $pph, $etablissement);
     }
 
     /**
      *
      * Modification partielle d'un lien Personne physique Etablissement.
      *
-     * @FOSRest\View(populateDefaultVars=false, serializerGroups={"lienPphEtablissement"})
-     * @FOSRest\Patch("/lienPphEtablissements/{id}")
+     * @FOSRest\View(populateDefaultVars=false, serializerGroups={"lienPphEtablissement","pph","etablissement", "adresse"})
+     * @FOSRest\Patch("/lienPphEtablissements/{pph}/{etablissement}")
      *
      * @SWG\Response(
      *     response=200,
@@ -188,18 +188,18 @@ class LienPphEtablissementController extends Controller
      * )
      * @SWG\Tag(name="lienPphEtablissements")
      */
-    public function patchLienPphEtablissementAction(Request $request, $id)
+    public function patchLienPphEtablissementAction(Request $request, $pph, $etablissement)
     {
-        return $this->updateLienPphEtablissement($request, false, $id);
+        return $this->updateLienPphEtablissement($request, false, $pph, $etablissement);
     }
 
 
-    private function updateLienPphEtablissement(Request $request, $clearMissing, $id)
+    private function updateLienPphEtablissement(Request $request, $clearMissing, $pph, $etablissement)
     {
         $em = $this->getDoctrine()->getManager();
         $lienPphEtablissement = $em
             ->getRepository('App:LienPphEtablissement')
-            ->find($id);
+            ->findOneBy(['pph'=>$pph, "etablissement"=>$etablissement]);
         /* @var $lienPphEtablissement LienPphEtablissement */
 
         if (empty($lienPphEtablissement)) {
@@ -212,7 +212,7 @@ class LienPphEtablissementController extends Controller
         // entité si l'utilisateur n'en fournit pas une dans sa requête
         $form->submit($request->request->all(), $clearMissing);
         if (!$form->isValid()) {
-            return View::create($form->getErrors(), Response::HTTP_BAD_REQUEST );
+            return View::create((string) $form->getErrors(true, false), Response::HTTP_BAD_REQUEST );
         }
 
         $em->persist($lienPphEtablissement);
@@ -226,8 +226,8 @@ class LienPphEtablissementController extends Controller
      *
      * Supprimer un lien Personne physique Etablissement.
      *
-     * @FOSRest\View(populateDefaultVars=false, serializerGroups={"lienPphEtablissement"})
-     * @FOSRest\Delete("/lienPphEtablissements/{lienPphEtablissement}")
+     * @FOSRest\View(populateDefaultVars=false, serializerGroups={"lienPphEtablissement","pph","etablissement", "adresse"})
+     * @FOSRest\Delete("/lienPphEtablissements/{pph}/{etablissement}")
      *
      * @SWG\Response(
      *     response=200,
@@ -236,13 +236,13 @@ class LienPphEtablissementController extends Controller
      *
      * @SWG\Tag(name="lienPphEtablissements")
      */
-    public function removeLienPphEtablissementAction(Request $request, $lienPphEtablissement)
+    public function removeLienPphEtablissementAction(Request $request,$pph, $etablissement)
     {
 
         $em = $this->getDoctrine()->getManager();
         $lienPphEtablissement = $em
             ->getRepository('App:LienPphEtablissement')
-            ->find($lienPphEtablissement); // L'identifiant en tant que paramètre n'est plus nécessaire
+            ->findOneBy(['pph'=>$pph, "etablissement"=>$etablissement]); // L'identifiant en tant que paramètre n'est plus nécessaire
 
         /* @var $lienPphEtablissement LienPphEtablissement */
         if (empty($lienPphEtablissement)) {

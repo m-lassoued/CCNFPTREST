@@ -25,7 +25,7 @@ class CoordonneesController extends Controller
     /**
      * Récupèrer la liste des coordonnees.
      *
-     * @FOSRest\View(populateDefaultVars=false, serializerGroups={"coordonnees"})
+     * @FOSRest\View(populateDefaultVars=false, serializerGroups={"coordonnees","adresse"})
      * @FOSRest\Get("/coordonneess")
      *
      * @SWG\Response(
@@ -63,7 +63,7 @@ class CoordonneesController extends Controller
      * Récupèrer un coordonnee.
      *
      * @ParamConverter("coordonnees", class="App:Coordonnees")
-     * @FOSRest\View(populateDefaultVars=false, serializerGroups={"coordonnees"})
+     * @FOSRest\View(populateDefaultVars=false, serializerGroups={"coordonnees","adresse"}))
      * @FOSRest\Get("/coordonneess/{id}")
      *
      * @SWG\Response(
@@ -84,7 +84,7 @@ class CoordonneesController extends Controller
     /**
      * Créer un coordonnee.
      *
-     * @FOSRest\View(populateDefaultVars=false, serializerGroups={"coordonnees"})
+     * @FOSRest\View(populateDefaultVars=false, serializerGroups={"coordonnees","adresse"}))
      * @FOSRest\Post("/coordonnees/new")
      *
      * @SWG\Response(
@@ -117,7 +117,7 @@ class CoordonneesController extends Controller
         $form->submit($request->request->all()); // Validation des données
 
         if (!$form->isValid()) {
-            return View::create($form->getErrors(), Response::HTTP_BAD_REQUEST );
+            return View::create((string) $form->getErrors(true, false), Response::HTTP_BAD_REQUEST );
         }
 
         $em = $this->getDoctrine()->getManager();
@@ -132,7 +132,7 @@ class CoordonneesController extends Controller
      *
      * Modifier un coordonnee.
      *
-     * @FOSRest\View(populateDefaultVars=false, serializerGroups={"coordonnees"})
+     * @FOSRest\View(populateDefaultVars=false, serializerGroups={"coordonnees","adresse"}))
      * @FOSRest\Put("/coordonneess/{id}")
      *
      * @SWG\Response(
@@ -165,7 +165,7 @@ class CoordonneesController extends Controller
      *
      * Modification partielle d'un coordonnee.
      *
-     * @FOSRest\View(populateDefaultVars=false, serializerGroups={"coordonnees"})
+     * @FOSRest\View(populateDefaultVars=false, serializerGroups={"coordonnees","adresse"}))
      * @FOSRest\Patch("/coordonneess/{id}")
      *
      * @SWG\Response(
@@ -212,7 +212,7 @@ class CoordonneesController extends Controller
         // entité si l'utilisateur n'en fournit pas une dans sa requête
         $form->submit($request->request->all(), $clearMissing);
         if (!$form->isValid()) {
-            return View::create($form->getErrors(), Response::HTTP_BAD_REQUEST );
+            return View::create((string) $form->getErrors(true, false), Response::HTTP_BAD_REQUEST );
         }
 
         $em->persist($coordonnees);
@@ -226,7 +226,7 @@ class CoordonneesController extends Controller
      *
      * Supprimer un coordonnee.
      *
-     * @FOSRest\View(populateDefaultVars=false, serializerGroups={"coordonnees"})
+     * @FOSRest\View(populateDefaultVars=false, serializerGroups={"coordonnees","adresse"}))
      * @FOSRest\Delete("/coordonneess/{coordonnees}")
      *
      * @SWG\Response(

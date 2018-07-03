@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\Groups;
 
 /**
  * TypeAdresse
@@ -25,6 +26,7 @@ class TypeAdresse
      * @var string|null
      *
      * @ORM\Column(name="LIBELLE", type="string", length=32, nullable=true)
+     * @Groups({"adresse"})
      */
     private $libelle;
 
@@ -59,5 +61,8 @@ class TypeAdresse
     {
         $this->libelle = $libelle;
     }
-
+    public function __toString(): string
+    {
+        return $this->libelle;
+    }
 }

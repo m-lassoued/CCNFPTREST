@@ -2,29 +2,29 @@
 
 namespace App\Form;
 
-use App\Entity\Coordonnees;
+use App\Entity\Etablissement;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CoordonneesType extends AbstractType
+class EtablissementType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('telephoneFixe')
-            ->add('telephonePortable')
-            ->add('adresseEPrincipale')
-            ->add('adresseESecondaire')
+            ->add('siret')
+            ->add('dateCreation', DateTimeType::class, array('widget' => 'single_text'))
+            ->add('nom')
+            ->add('idPmo')
             ->add('idAdresse')
-            ->add('idTypeCoordonnees')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Coordonnees::class,
+            'data_class' => Etablissement::class,
             'csrf_protection' => false
         ]);
     }

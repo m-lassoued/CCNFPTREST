@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\Groups;
 
 /**
  * LienPphEtablissement
@@ -16,6 +17,7 @@ class LienPphEtablissement
      * @var \DateTime|null
      *
      * @ORM\Column(name="DATE_DEBUT", type="date", nullable=true)
+     * @Groups({"lienPphEtablissement"})
      */
     private $dateDebut;
 
@@ -23,11 +25,12 @@ class LienPphEtablissement
      * @var \DateTime|null
      *
      * @ORM\Column(name="DATE_FIN", type="date", nullable=true)
+     * @Groups({"lienPphEtablissement"})
      */
     private $dateFin;
 
     /**
-     * @var \Pph
+     * @var Pph
      *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
@@ -35,11 +38,12 @@ class LienPphEtablissement
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="PPH_ID", referencedColumnName="ID")
      * })
+     * @Groups({"lienPphEtablissement"})
      */
     private $pph;
 
     /**
-     * @var \Etablissement
+     * @var Etablissement
      *
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
@@ -47,16 +51,18 @@ class LienPphEtablissement
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="ETABLISSEMENT_ID", referencedColumnName="ID")
      * })
+     * @Groups({"lienPphEtablissement"})
      */
     private $etablissement;
 
     /**
-     * @var \TypeLienPphEtablissement
+     * @var TypeLienPphEtablissement
      *
      * @ORM\ManyToOne(targetEntity="TypeLienPphEtablissement")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="ID_TYPE_LIEN_PE", referencedColumnName="ID")
      * })
+     * @Groups({"lienPphEtablissement"})
      */
     private $idTypeLienPe;
 
@@ -93,49 +99,49 @@ class LienPphEtablissement
     }
 
     /**
-     * @return \Pph
+     * @return null|Pph
      */
-    public function getPph(): \Pph
+    public function getPph(): ?Pph
     {
         return $this->pph;
     }
 
     /**
-     * @param \Pph $pph
+     * @param null|Pph $pph
      */
-    public function setPph(\Pph $pph): void
+    public function setPph($pph): void
     {
         $this->pph = $pph;
     }
 
     /**
-     * @return \Etablissement
+     * @return null|Etablissement
      */
-    public function getEtablissement(): \Etablissement
+    public function getEtablissement(): ?Etablissement
     {
         return $this->etablissement;
     }
 
     /**
-     * @param \Etablissement $etablissement
+     * @param null|Etablissement $etablissement
      */
-    public function setEtablissement(\Etablissement $etablissement): void
+    public function setEtablissement($etablissement): void
     {
         $this->etablissement = $etablissement;
     }
 
     /**
-     * @return \TypeLienPphEtablissement
+     * @return null|TypeLienPphEtablissement
      */
-    public function getIdTypeLienPe(): \TypeLienPphEtablissement
+    public function getIdTypeLienPe(): ?TypeLienPphEtablissement
     {
         return $this->idTypeLienPe;
     }
 
     /**
-     * @param \TypeLienPphEtablissement $idTypeLienPe
+     * @param null|TypeLienPphEtablissement $idTypeLienPe
      */
-    public function setIdTypeLienPe(\TypeLienPphEtablissement $idTypeLienPe): void
+    public function setIdTypeLienPe($idTypeLienPe): void
     {
         $this->idTypeLienPe = $idTypeLienPe;
     }

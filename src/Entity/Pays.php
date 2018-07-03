@@ -105,5 +105,8 @@ class Pays
     {
         $this->actif = $actif;
     }
-
+    public function __toString(): string
+    {
+        return $this->libelle;
+    }
 }

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\Groups;
 
 /**
  * Metier
@@ -25,6 +26,7 @@ class Metier
      * @var string|null
      *
      * @ORM\Column(name="LIBELLE", type="string", length=64, nullable=true)
+     * @Groups({"metier"})
      */
     private $libelle;
 
@@ -32,6 +34,7 @@ class Metier
      * @var string|null
      *
      * @ORM\Column(name="CODE", type="string", length=64, nullable=true)
+     * @Groups({"metier"})
      */
     private $code;
 
@@ -39,16 +42,18 @@ class Metier
      * @var bool|null
      *
      * @ORM\Column(name="ACTIF", type="boolean", nullable=true)
+     * @Groups({"metier"})
      */
     private $actif;
 
     /**
-     * @var \FamilleMetier
+     * @var FamilleMetier
      *
      * @ORM\ManyToOne(targetEntity="FamilleMetier")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="ID_FAMILLE_METIER", referencedColumnName="ID")
      * })
+     * @Groups({"metier"})
      */
     private $idFamilleMetier;
 
@@ -117,17 +122,17 @@ class Metier
     }
 
     /**
-     * @return \FamilleMetier
+     * @return null|FamilleMetier
      */
-    public function getIdFamilleMetier(): \FamilleMetier
+    public function getIdFamilleMetier(): ?FamilleMetier
     {
         return $this->idFamilleMetier;
     }
 
     /**
-     * @param \FamilleMetier $idFamilleMetier
+     * @param null|FamilleMetier $idFamilleMetier
      */
-    public function setIdFamilleMetier(\FamilleMetier $idFamilleMetier): void
+    public function setIdFamilleMetier($idFamilleMetier): void
     {
         $this->idFamilleMetier = $idFamilleMetier;
     }

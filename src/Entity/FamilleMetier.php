@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\Groups;
 
 /**
  * FamilleMetier
@@ -25,6 +26,7 @@ class FamilleMetier
      * @var string|null
      *
      * @ORM\Column(name="LIBELLE", type="string", length=64, nullable=true)
+     * @Groups({"metier"})
      */
     private $libelle;
 
@@ -32,6 +34,7 @@ class FamilleMetier
      * @var string|null
      *
      * @ORM\Column(name="CODE", type="string", length=64, nullable=true)
+     * @Groups({"metier"})
      */
     private $code;
 
@@ -39,6 +42,7 @@ class FamilleMetier
      * @var bool|null
      *
      * @ORM\Column(name="ACTIF", type="boolean", nullable=true)
+     * @Groups({"metier"})
      */
     private $actif;
 

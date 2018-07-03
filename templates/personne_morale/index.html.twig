@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}PersonneMorale index{% endblock %}
+
+{% block body %}
+    <h1>PersonneMorale index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Siren</th>
+                <th>Nom</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for personne_morale in personne_morales %}
+            <tr>
+                <td>{{ personne_morale.id }}</td>
+                <td>{{ personne_morale.siren }}</td>
+                <td>{{ personne_morale.nom }}</td>
+                <td>
+                    <a href="{{ path('personne_morale_show', {'id': personne_morale.id}) }}">show</a>
+                    <a href="{{ path('personne_morale_edit', {'id': personne_morale.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('personne_morale_new') }}">Create new</a>
+{% endblock %}

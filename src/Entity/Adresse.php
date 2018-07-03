@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\Groups;
 
 /**
  * Adresse
@@ -25,6 +26,7 @@ class Adresse
      * @var string|null
      *
      * @ORM\Column(name="ADRESSE_1", type="string", length=50, nullable=true)
+     * @Groups({"adresse"})
      */
     private $adresse1;
 
@@ -32,6 +34,7 @@ class Adresse
      * @var string|null
      *
      * @ORM\Column(name="ADRESSE_2", type="string", length=50, nullable=true)
+     *  @Groups({"adresse"})
      */
     private $adresse2;
 
@@ -39,6 +42,7 @@ class Adresse
      * @var string|null
      *
      * @ORM\Column(name="ADRESSE_3", type="string", length=50, nullable=true)
+     *  @Groups({"adresse"})
      */
     private $adresse3;
 
@@ -46,6 +50,7 @@ class Adresse
      * @var string|null
      *
      * @ORM\Column(name="CODE_POSTAL", type="string", length=10, nullable=true)
+     *  @Groups({"adresse"})
      */
     private $codePostal;
 
@@ -53,11 +58,12 @@ class Adresse
      * @var string|null
      *
      * @ORM\Column(name="AUTRE_COMMUNE", type="string", length=64, nullable=true)
+     *  @Groups({"adresse"})
      */
     private $autreCommune;
 
     /**
-     * @var \Commune
+     * @var Commune
      *
      * @ORM\ManyToOne(targetEntity="Commune")
      * @ORM\JoinColumns({
@@ -67,7 +73,7 @@ class Adresse
     private $idCommune;
 
     /**
-     * @var \Pays
+     * @var Pays
      *
      * @ORM\ManyToOne(targetEntity="Pays")
      * @ORM\JoinColumns({
@@ -77,12 +83,13 @@ class Adresse
     private $idPays;
 
     /**
-     * @var \TypeAdresse
+     * @var TypeAdresse
      *
      * @ORM\ManyToOne(targetEntity="TypeAdresse")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="ID_TYPE_ADRESSE", referencedColumnName="ID")
      * })
+     * @Groups({"adresse"})
      */
     private $idTypeAdresse;
 
@@ -183,49 +190,49 @@ class Adresse
     }
 
     /**
-     * @return \Commune
+     * @return null|Commune
      */
-    public function getIdCommune(): \Commune
+    public function getIdCommune(): ?Commune
     {
         return $this->idCommune;
     }
 
     /**
-     * @param \Commune $idCommune
+     * @param null|Commune $idCommune
      */
-    public function setIdCommune(\Commune $idCommune): void
+    public function setIdCommune($idCommune): void
     {
         $this->idCommune = $idCommune;
     }
 
     /**
-     * @return \Pays
+     * @return null|Pays
      */
-    public function getIdPays(): \Pays
+    public function getIdPays(): ?Pays
     {
         return $this->idPays;
     }
 
     /**
-     * @param \Pays $idPays
+     * @param null|Pays $idPays
      */
-    public function setIdPays(\Pays $idPays): void
+    public function setIdPays($idPays): void
     {
         $this->idPays = $idPays;
     }
 
     /**
-     * @return \TypeAdresse
+     * @return null|TypeAdresse
      */
-    public function getIdTypeAdresse(): \TypeAdresse
+    public function getIdTypeAdresse(): ?TypeAdresse
     {
         return $this->idTypeAdresse;
     }
 
     /**
-     * @param \TypeAdresse $idTypeAdresse
+     * @param null|TypeAdresse $idTypeAdresse
      */
-    public function setIdTypeAdresse(\TypeAdresse $idTypeAdresse): void
+    public function setIdTypeAdresse($idTypeAdresse): void
     {
         $this->idTypeAdresse = $idTypeAdresse;
     }

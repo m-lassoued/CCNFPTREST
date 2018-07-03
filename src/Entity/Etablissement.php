@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\Groups;
 
 /**
  * Etablissement
@@ -25,6 +26,7 @@ class Etablissement
      * @var string|null
      *
      * @ORM\Column(name="SIRET", type="string", length=15, nullable=true)
+     * @Groups({"etablissement"})
      */
     private $siret;
 
@@ -32,6 +34,7 @@ class Etablissement
      * @var \DateTime|null
      *
      * @ORM\Column(name="DATE_CREATION", type="date", nullable=true)
+     * @Groups({"etablissement"})
      */
     private $dateCreation;
 
@@ -39,26 +42,29 @@ class Etablissement
      * @var string|null
      *
      * @ORM\Column(name="NOM", type="string", length=75, nullable=true)
+     * @Groups({"etablissement"})
      */
     private $nom;
 
     /**
-     * @var \PersonneMorale
+     * @var PersonneMorale
      *
      * @ORM\ManyToOne(targetEntity="PersonneMorale")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="ID_PMO", referencedColumnName="ID")
      * })
+     * @Groups({"etablissement"})
      */
     private $idPmo;
 
     /**
-     * @var \Adresse
+     * @var Adresse
      *
      * @ORM\ManyToOne(targetEntity="Adresse")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="ID_ADRESSE", referencedColumnName="ID")
      * })
+     * @Groups({"etablissement"})
      */
     private $idAdresse;
 
@@ -127,33 +133,33 @@ class Etablissement
     }
 
     /**
-     * @return \PersonneMorale
+     * @return null|PersonneMorale
      */
-    public function getIdPmo(): \PersonneMorale
+    public function getIdPmo(): ?PersonneMorale
     {
         return $this->idPmo;
     }
 
     /**
-     * @param \PersonneMorale $idPmo
+     * @param null|PersonneMorale $idPmo
      */
-    public function setIdPmo(\PersonneMorale $idPmo): void
+    public function setIdPmo($idPmo): void
     {
         $this->idPmo = $idPmo;
     }
 
     /**
-     * @return \Adresse
+     * @return null|Adresse
      */
-    public function getIdAdresse(): \Adresse
+    public function getIdAdresse(): ?Adresse
     {
         return $this->idAdresse;
     }
 
     /**
-     * @param \Adresse $idAdresse
+     * @param null|Adresse $idAdresse
      */
-    public function setIdAdresse(\Adresse $idAdresse): void
+    public function setIdAdresse($idAdresse): void
     {
         $this->idAdresse = $idAdresse;
     }

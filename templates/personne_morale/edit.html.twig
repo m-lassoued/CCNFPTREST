@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit PersonneMorale{% endblock %}
+
+{% block body %}
+    <h1>Edit PersonneMorale</h1>
+
+    {{ include('personne_morale/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('personne_morale_index') }}">back to list</a>
+
+    {{ include('personne_morale/_delete_form.html.twig') }}
+{% endblock %}

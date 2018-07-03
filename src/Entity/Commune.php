@@ -175,4 +175,9 @@ class Commune
         $this->ancienCodeInsee = $ancienCodeInsee;
     }
 
+    public function __toString(): string
+    {
+        return $this->code;
+    }
+
 }

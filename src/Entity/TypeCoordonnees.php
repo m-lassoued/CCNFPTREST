@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\Groups;
 
 /**
  * TypeCoordonnees
@@ -25,6 +26,7 @@ class TypeCoordonnees
      * @var string|null
      *
      * @ORM\Column(name="LIBELLE", type="string", length=50, nullable=true)
+     * @Groups({"coordonnees"})
      */
     private $libelle;
 

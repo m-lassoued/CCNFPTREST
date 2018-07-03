@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\Groups;
 
 /**
  * Coordonnees
@@ -25,6 +26,7 @@ class Coordonnees
      * @var string|null
      *
      * @ORM\Column(name="TELEPHONE_FIXE", type="string", length=25, nullable=true)
+     * @Groups({"coordonnees"})
      */
     private $telephoneFixe;
 
@@ -32,6 +34,7 @@ class Coordonnees
      * @var string|null
      *
      * @ORM\Column(name="TELEPHONE_PORTABLE", type="string", length=25, nullable=true)
+     * @Groups({"coordonnees"})
      */
     private $telephonePortable;
 
@@ -39,6 +42,7 @@ class Coordonnees
      * @var string|null
      *
      * @ORM\Column(name="ADRESSE_E_PRINCIPALE", type="string", length=320, nullable=true)
+     * @Groups({"coordonnees"})
      */
     private $adresseEPrincipale;
 
@@ -46,26 +50,29 @@ class Coordonnees
      * @var string|null
      *
      * @ORM\Column(name="ADRESSE_E_SECONDAIRE", type="string", length=320, nullable=true)
+     * @Groups({"coordonnees"})
      */
     private $adresseESecondaire;
 
     /**
-     * @var \Adresse
+     * @var  Adresse
      *
      * @ORM\ManyToOne(targetEntity="Adresse")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="ID_ADRESSE", referencedColumnName="ID")
      * })
+     * @Groups({"coordonnees"})
      */
     private $idAdresse;
 
     /**
-     * @var \TypeCoordonnees
+     * @var TypeCoordonnees
      *
      * @ORM\ManyToOne(targetEntity="TypeCoordonnees")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="ID_TYPE_COORDONNEES", referencedColumnName="ID")
      * })
+     * @Groups({"coordonnees"})
      */
     private $idTypeCoordonnees;
 
@@ -150,33 +157,33 @@ class Coordonnees
     }
 
     /**
-     * @return \Adresse
+     * @return  null|Adresse
      */
-    public function getIdAdresse(): \Adresse
+    public function getIdAdresse():  ?Adresse
     {
         return $this->idAdresse;
     }
 
     /**
-     * @param \Adresse $idAdresse
+     * @param  null|Adresse $idAdresse
      */
-    public function setIdAdresse(\Adresse $idAdresse): void
+    public function setIdAdresse($idAdresse): void
     {
         $this->idAdresse = $idAdresse;
     }
 
     /**
-     * @return \TypeCoordonnees
+     * @return null|TypeCoordonnees
      */
-    public function getIdTypeCoordonnees(): \TypeCoordonnees
+    public function getIdTypeCoordonnees(): ?TypeCoordonnees
     {
         return $this->idTypeCoordonnees;
     }
 
     /**
-     * @param \TypeCoordonnees $idTypeCoordonnees
+     * @param null|TypeCoordonnees $idTypeCoordonnees
      */
-    public function setIdTypeCoordonnees(\TypeCoordonnees $idTypeCoordonnees): void
+    public function setIdTypeCoordonnees($idTypeCoordonnees): void
     {
         $this->idTypeCoordonnees = $idTypeCoordonnees;
     }

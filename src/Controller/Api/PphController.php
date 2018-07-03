@@ -117,7 +117,7 @@ class PphController extends Controller
         $form->submit($request->request->all()); // Validation des données
 
         if (!$form->isValid()) {
-            return View::create($form->getErrors(), Response::HTTP_BAD_REQUEST );
+            return View::create((string) $form->getErrors(true, false), Response::HTTP_BAD_REQUEST );
         }
 
         $em = $this->getDoctrine()->getManager();
@@ -212,7 +212,7 @@ class PphController extends Controller
         // entité si l'utilisateur n'en fournit pas une dans sa requête
         $form->submit($request->request->all(), $clearMissing);
         if (!$form->isValid()) {
-            return View::create($form->getErrors(), Response::HTTP_BAD_REQUEST );
+            return View::create((string) $form->getErrors(true, false), Response::HTTP_BAD_REQUEST );
         }
 
         $em->persist($pph);
