@@ -21,66 +21,6 @@ use App\Entity\Metier;
  */
 class MetierController extends Controller
 {
-
-    /**
-     * Récupèrer la liste des metiers.
-     *
-     * @FOSRest\View(populateDefaultVars=false, serializerGroups={"metier"})
-     * @FOSRest\Get("/metiers")
-     *
-     * @SWG\Response(
-     *     response=200,
-     *     description="Returns the metiers",
-     *     @SWG\Schema(
-     *         type="array",
-     *         @SWG\Items(ref=@Model(type=Metier::class))
-     *     )
-     * )
-     * @SWG\Parameter(name="offset",in="query",type="integer",description="Index de début de la pagination", allowEmptyValue=false, format="\d+")
-     * @SWG\Parameter(name="limit",in="query",type="integer",description="Nombre d'éléments à afficher", allowEmptyValue=false, format="\d+")
-     * @SWG\Parameter(name="sort",in="query",type="string",description="Ordre de tri (basé sur le nom)",format="(asc|desc)")
-     *
-     * @SWG\Tag(name="metiers")
-     *
-     * @return array
-     */
-    public function getMetiersAction(Request $request)
-    {
-
-        $offset = $request->get('offset');
-        $limit = $request->get('limit');
-        $sort = $request->get('sort')?$request->get('sort'):'asc';
-
-        $repository = $this->getDoctrine()->getRepository(Metier::class);
-
-        // query for a single Product by its primary key (usually "id")
-        $metiers = $repository->findBy([],['libelle'=>$sort], $limit, $offset);
-
-        return View::create($metiers, Response::HTTP_OK );
-    }
-
-    /**
-     * Récupèrer une metier.
-     *
-     * @ParamConverter("metier", class="App:Metier")
-     * @FOSRest\View(populateDefaultVars=false, serializerGroups={"metier"})
-     * @FOSRest\Get("/metiers/{id}")
-     *
-     * @SWG\Response(
-     *     response=200,
-     *     description="Returns the metier",
-     * )
-     * @SWG\Tag(name="metiers")
-     * @return array
-     */
-    public function getMetierAction(Request $request, Metier $metier)
-    {
-        if (empty($metier)) {
-            return View::create(['message' => 'Metier not found'], Response::HTTP_NOT_FOUND);
-        }
-
-        return View::create($metier, Response::HTTP_OK );
-    }
     /**
      * Créer une metier.
      *
