@@ -43,7 +43,7 @@ class CadreEmploi
     private $actif;
 
     /**
-     * @var \Filliere
+     * @var Filliere
      *
      * @ORM\ManyToOne(targetEntity="Filliere")
      * @ORM\JoinColumns({
@@ -117,17 +117,17 @@ class CadreEmploi
     }
 
     /**
-     * @return \Filliere
+     * @return null|Filliere
      */
-    public function getIdFilliere(): \Filliere
+    public function getIdFilliere(): ?Filliere
     {
         return $this->idFilliere;
     }
 
     /**
-     * @param \Filliere $idFilliere
+     * @param null|Filliere $idFilliere
      */
-    public function setIdFilliere(\Filliere $idFilliere): void
+    public function setIdFilliere($idFilliere): void
     {
         $this->idFilliere = $idFilliere;
     }

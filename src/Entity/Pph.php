@@ -9,7 +9,7 @@ use JMS\Serializer\Annotation\Groups;
  * Pph
  *
  * @ORM\Table(name="PPH", indexes={@ORM\Index(name="fk_pph_metier1_idx", columns={"ID_METIER"}), @ORM\Index(name="fk_pph_etat_pph1_idx", columns={"ID_ETAT_PPH"}), @ORM\Index(name="fk_pph_motif_inactivation1_idx", columns={"ID_MOTIF_INACTIVATION"}), @ORM\Index(name="fk_pph_source_donnees1_idx", columns={"ID_SOURCE_DONNEES"}), @ORM\Index(name="fk_pph_net1_idx", columns={"ID_NET"}), @ORM\Index(name="fk_pph_coordonnees1_idx", columns={"ID_COORDONNEES"}), @ORM\Index(name="fk_pph_civilite1_idx", columns={"ID_CIVILITE"})})
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\PphRepository")
  */
 class Pph
 {

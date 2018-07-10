@@ -30,7 +30,7 @@ class AdresseController extends Controller
      *
      * @SWG\Response(
      *     response=200,
-     *     description="Returns the adresses",
+     *     description="Retourner  adresses",
      *     @SWG\Schema(
      *         type="array",
      *         @SWG\Items(ref=@Model(type=Adresse::class))
@@ -53,7 +53,7 @@ class AdresseController extends Controller
 
         $repository = $this->getDoctrine()->getRepository(Adresse::class);
 
-        // query for a single Product by its primary key (usually "id")
+
         $adresses = $repository->findBy([],['adresse1'=>$sort], $limit, $offset);
 
         return View::create($adresses, Response::HTTP_OK );
@@ -68,7 +68,7 @@ class AdresseController extends Controller
      *
      * @SWG\Response(
      *     response=200,
-     *     description="Returns the adresse",
+     *     description="Retourner  adresse",
      * )
      * @SWG\Tag(name="adresses")
      * @return array
@@ -89,7 +89,7 @@ class AdresseController extends Controller
      *
      * @SWG\Response(
      *     response=200,
-     *     description="Returns the adresses",
+     *     description="Retourner  adresses",
      *     @SWG\Schema(
      *         type="array",
      *         @SWG\Items(ref=@Model(type=Adresse::class))
@@ -137,7 +137,7 @@ class AdresseController extends Controller
      *
      * @SWG\Response(
      *     response=200,
-     *     description="Returns the adresse updated",
+     *     description="Retourner  adresse updated",
      *     @SWG\Schema(
      *         type="array",
      *         @SWG\Items(ref=@Model(type=Adresse::class))
@@ -170,7 +170,7 @@ class AdresseController extends Controller
      *
      * @SWG\Response(
      *     response=200,
-     *     description="Returns the adresse patched",
+     *     description="Retourner  adresse patched",
      *     @SWG\Schema(
      *         type="array",
      *         @SWG\Items(ref=@Model(type=Adresse::class))
@@ -233,7 +233,7 @@ class AdresseController extends Controller
      *
      * @SWG\Response(
      *     response=200,
-     *     description="Returns the if adresse was deleted"
+     *     description="Retourner  if adresse was deleted"
      * )
      *
      * @SWG\Tag(name="adresses")

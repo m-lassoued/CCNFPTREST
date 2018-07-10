@@ -29,7 +29,7 @@ class MetierController extends Controller
      *
      * @SWG\Response(
      *     response=200,
-     *     description="Returns the metiers",
+     *     description="Retourner  metiers",
      *     @SWG\Schema(
      *         type="array",
      *         @SWG\Items(ref=@Model(type=Metier::class))
@@ -77,7 +77,7 @@ class MetierController extends Controller
      *
      * @SWG\Response(
      *     response=200,
-     *     description="Returns the metier updated",
+     *     description="Retourner  metier updated",
      *     @SWG\Schema(
      *         type="array",
      *         @SWG\Items(ref=@Model(type=Metier::class))
@@ -110,7 +110,7 @@ class MetierController extends Controller
      *
      * @SWG\Response(
      *     response=200,
-     *     description="Returns the metier patched",
+     *     description="Retourner  metier patched",
      *     @SWG\Schema(
      *         type="array",
      *         @SWG\Items(ref=@Model(type=Metier::class))
@@ -171,7 +171,7 @@ class MetierController extends Controller
      *
      * @SWG\Response(
      *     response=200,
-     *     description="Returns the if metier was deleted"
+     *     description="Retourner  if metier was deleted"
      * )
      *
      * @SWG\Tag(name="metiers")

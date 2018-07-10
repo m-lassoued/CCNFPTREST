@@ -2,6 +2,7 @@
 
 namespace App\Controller\Api;
 
+use App\Service\ResponseApi;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -39,7 +40,7 @@ class ReferentielController extends Controller
      *
      * @SWG\Response(
      *     response=200,
-     *     description="Returns the typeLienPphEtablissements",
+     *     description="Retourner  typeLienPphEtablissements",
      *     @SWG\Schema(
      *         type="array",
      *         @SWG\Items(ref=@Model(type=TypeLienPphEtablissement::class))
@@ -62,7 +63,7 @@ class ReferentielController extends Controller
 
         $repository = $this->getDoctrine()->getRepository(TypeLienPphEtablissement::class);
 
-        // query for a single Product by its primary key (usually "id")
+
         $typeLienPphEtablissements = $repository->findBy([],['libelle'=>$sort], $limit, $offset);
 
         return View::create($typeLienPphEtablissements, Response::HTTP_OK );
@@ -77,7 +78,7 @@ class ReferentielController extends Controller
      *
      * @SWG\Response(
      *     response=200,
-     *     description="Returns the typeLienPphEtablissement",
+     *     description="Retourner  typeLienPphEtablissement",
      * )
      * @SWG\Tag(name="Referentiel")
      * @return array
@@ -98,7 +99,7 @@ class ReferentielController extends Controller
      *
      * @SWG\Response(
      *     response=200,
-     *     description="Returns the typeLienPphPphs",
+     *     description="Retourner  typeLienPphPphs",
      *     @SWG\Schema(
      *         type="array",
      *         @SWG\Items(ref=@Model(type=TypeLienPphPph::class))
@@ -121,7 +122,7 @@ class ReferentielController extends Controller
 
         $repository = $this->getDoctrine()->getRepository(TypeLienPphPph::class);
 
-        // query for a single Product by its primary key (usually "id")
+
         $typeLienPphPphs = $repository->findBy([],['libelle'=>$sort], $limit, $offset);
 
         return View::create($typeLienPphPphs, Response::HTTP_OK );
@@ -136,7 +137,7 @@ class ReferentielController extends Controller
      *
      * @SWG\Response(
      *     response=200,
-     *     description="Returns the typeLienPphPph",
+     *     description="Retourner  typeLienPphPph",
      * )
      * @SWG\Tag(name="Referentiel")
      * @return array
@@ -157,7 +158,7 @@ class ReferentielController extends Controller
      *
      * @SWG\Response(
      *     response=200,
-     *     description="Returns the metiers",
+     *     description="Retourner  metiers",
      *     @SWG\Schema(
      *         type="array",
      *         @SWG\Items(ref=@Model(type=Metier::class))
@@ -180,7 +181,7 @@ class ReferentielController extends Controller
 
         $repository = $this->getDoctrine()->getRepository(Metier::class);
 
-        // query for a single Product by its primary key (usually "id")
+
         $metiers = $repository->findBy([],['libelle'=>$sort], $limit, $offset);
 
         return View::create($metiers, Response::HTTP_OK );
@@ -189,35 +190,45 @@ class ReferentielController extends Controller
     /**
      * Récupèrer une metier.
      *
-     * @ParamConverter("metier", class="App:Metier")
      * @FOSRest\View(populateDefaultVars=false)
-     * @FOSRest\Get("/metiers/{id}")
+     * @FOSRest\Get("/metier")
+     * @SWG\Parameter(name="id",in="query",type="integer", required=false, format="\d+")
+     * @SWG\Parameter(name="code",in="query",type="string", required=false)
      *
      * @SWG\Response(
      *     response=200,
-     *     description="Returns the metier",
+     *     description="Retourner  metier",
      * )
      * @SWG\Tag(name="Referentiel")
      * @return array
      */
-    public function getMetierAction(Request $request, Metier $metier)
+    public function getMetierAction(Request $request)
     {
+
+        $criteriaArray = [];
+        $result = $this->getRequestParameter($request, $criteriaArray);
+        if(empty($criteriaArray)) return $result;
+
+        $repository = $this->getDoctrine()->getRepository(Metier::class);
+
+        $metier = $repository->findOneBy($criteriaArray);
+
         if (empty($metier)) {
-            return View::create(['message' => 'Metier not found'], Response::HTTP_NOT_FOUND);
+            return View::create( ResponseApi::create(14), Response::HTTP_NOT_FOUND);
         }
 
-        return View::create($metier, Response::HTTP_OK );
+        return View::create(ResponseApi::create(ResponseApi::CODE_OK, $metier), Response::HTTP_OK );
     }
 
     /**
      * Récupèrer la liste des cadres d'emploi.
      *
-     * @FOSRest\View(populateDefaultVars=false, serializerGroups={"cadreEmploi"})
+     * @FOSRest\View(populateDefaultVars=false)
      * @FOSRest\Get("/cadreEmplois")
      *
      * @SWG\Response(
      *     response=200,
-     *     description="Returns the cadreEmplois",
+     *     description="Retourner  cadreEmplois",
      *     @SWG\Schema(
      *         type="array",
      *         @SWG\Items(ref=@Model(type=CadreEmploi::class))
@@ -240,7 +251,7 @@ class ReferentielController extends Controller
 
         $repository = $this->getDoctrine()->getRepository(CadreEmploi::class);
 
-        // query for a single Product by its primary key (usually "id")
+
         $cadreEmplois = $repository->findBy([],['libelle'=>$sort], $limit, $offset);
 
         return View::create($cadreEmplois, Response::HTTP_OK );
@@ -250,12 +261,12 @@ class ReferentielController extends Controller
      * Récupèrer une cadreEmploi.
      *
      * @ParamConverter("cadreEmploi", class="App:CadreEmploi")
-     * @FOSRest\View(populateDefaultVars=false, serializerGroups={"cadreEmploi"})
+     * @FOSRest\View(populateDefaultVars=false)
      * @FOSRest\Get("/cadreEmplois/{id}")
      *
      * @SWG\Response(
      *     response=200,
-     *     description="Returns the cadreEmploi",
+     *     description="Retourner  cadreEmploi",
      * )
      * @SWG\Tag(name="Referentiel")
      * @return array
@@ -272,12 +283,12 @@ class ReferentielController extends Controller
     /**
      * Récupèrer la liste des communes.
      *
-     * @FOSRest\View(populateDefaultVars=false, serializerGroups={"commune"})
+     * @FOSRest\View(populateDefaultVars=false)
      * @FOSRest\Get("/communes")
      *
      * @SWG\Response(
      *     response=200,
-     *     description="Returns the communes",
+     *     description="Retourner  communes",
      *     @SWG\Schema(
      *         type="array",
      *         @SWG\Items(ref=@Model(type=Commune::class))
@@ -300,8 +311,8 @@ class ReferentielController extends Controller
 
         $repository = $this->getDoctrine()->getRepository(Commune::class);
 
-        // query for a single Product by its primary key (usually "id")
-        $communes = $repository->findBy([],['libelle'=>$sort], $limit, $offset);
+
+        $communes = $repository->findBy([],['libelleInsee'=>$sort], $limit, $offset);
 
         return View::create($communes, Response::HTTP_OK );
     }
@@ -310,12 +321,12 @@ class ReferentielController extends Controller
      * Récupèrer une commune.
      *
      * @ParamConverter("commune", class="App:Commune")
-     * @FOSRest\View(populateDefaultVars=false, serializerGroups={"commune"})
+     * @FOSRest\View(populateDefaultVars=false)
      * @FOSRest\Get("/communes/{id}")
      *
      * @SWG\Response(
      *     response=200,
-     *     description="Returns the commune",
+     *     description="Retourner  commune",
      * )
      * @SWG\Tag(name="Referentiel")
      * @return array
@@ -331,12 +342,12 @@ class ReferentielController extends Controller
     /**
      * Récupèrer la liste des familleMetiers.
      *
-     * @FOSRest\View(populateDefaultVars=false, serializerGroups={"familleMetier"})
+     * @FOSRest\View(populateDefaultVars=false)
      * @FOSRest\Get("/familleMetiers")
      *
      * @SWG\Response(
      *     response=200,
-     *     description="Returns the familleMetiers",
+     *     description="Retourner  familleMetiers",
      *     @SWG\Schema(
      *         type="array",
      *         @SWG\Items(ref=@Model(type=FamilleMetier::class))
@@ -359,7 +370,7 @@ class ReferentielController extends Controller
 
         $repository = $this->getDoctrine()->getRepository(FamilleMetier::class);
 
-        // query for a single Product by its primary key (usually "id")
+
         $familleMetiers = $repository->findBy([],['libelle'=>$sort], $limit, $offset);
 
         return View::create($familleMetiers, Response::HTTP_OK );
@@ -369,12 +380,12 @@ class ReferentielController extends Controller
      * Récupèrer une familleMetier.
      *
      * @ParamConverter("familleMetier", class="App:FamilleMetier")
-     * @FOSRest\View(populateDefaultVars=false, serializerGroups={"familleMetier"})
+     * @FOSRest\View(populateDefaultVars=false)
      * @FOSRest\Get("/familleMetiers/{id}")
      *
      * @SWG\Response(
      *     response=200,
-     *     description="Returns the familleMetier",
+     *     description="Retourner  familleMetier",
      * )
      * @SWG\Tag(name="Referentiel")
      * @return array
@@ -392,12 +403,12 @@ class ReferentielController extends Controller
     /**
      * Récupèrer la liste des fillieres.
      *
-     * @FOSRest\View(populateDefaultVars=false, serializerGroups={"filliere"})
+     * @FOSRest\View(populateDefaultVars=false)
      * @FOSRest\Get("/fillieres")
      *
      * @SWG\Response(
      *     response=200,
-     *     description="Returns the fillieres",
+     *     description="Retourner  fillieres",
      *     @SWG\Schema(
      *         type="array",
      *         @SWG\Items(ref=@Model(type=Filliere::class))
@@ -420,7 +431,7 @@ class ReferentielController extends Controller
 
         $repository = $this->getDoctrine()->getRepository(Filliere::class);
 
-        // query for a single Product by its primary key (usually "id")
+
         $fillieres = $repository->findBy([],['libelle'=>$sort], $limit, $offset);
 
         return View::create($fillieres, Response::HTTP_OK );
@@ -430,12 +441,12 @@ class ReferentielController extends Controller
      * Récupèrer une filliere.
      *
      * @ParamConverter("filliere", class="App:Filliere")
-     * @FOSRest\View(populateDefaultVars=false, serializerGroups={"filliere"})
+     * @FOSRest\View(populateDefaultVars=false)
      * @FOSRest\Get("/fillieres/{id}")
      *
      * @SWG\Response(
      *     response=200,
-     *     description="Returns the filliere",
+     *     description="Retourner  filliere",
      * )
      * @SWG\Tag(name="Referentiel")
      * @return array
@@ -451,12 +462,12 @@ class ReferentielController extends Controller
     /**
      * Récupèrer la liste des motifInactivations.
      *
-     * @FOSRest\View(populateDefaultVars=false, serializerGroups={"motifInactivation"})
+     * @FOSRest\View(populateDefaultVars=false)
      * @FOSRest\Get("/motifInactivations")
      *
      * @SWG\Response(
      *     response=200,
-     *     description="Returns the motifInactivations",
+     *     description="Retourner  motifInactivations",
      *     @SWG\Schema(
      *         type="array",
      *         @SWG\Items(ref=@Model(type=MotifInactivation::class))
@@ -479,7 +490,7 @@ class ReferentielController extends Controller
 
         $repository = $this->getDoctrine()->getRepository(MotifInactivation::class);
 
-        // query for a single Product by its primary key (usually "id")
+
         $motifInactivations = $repository->findBy([],['libelle'=>$sort], $limit, $offset);
 
         return View::create($motifInactivations, Response::HTTP_OK );
@@ -489,12 +500,12 @@ class ReferentielController extends Controller
      * Récupèrer une motifInactivation.
      *
      * @ParamConverter("motifInactivation", class="App:MotifInactivation")
-     * @FOSRest\View(populateDefaultVars=false, serializerGroups={"motifInactivation"})
+     * @FOSRest\View(populateDefaultVars=false)
      * @FOSRest\Get("/motifInactivations/{id}")
      *
      * @SWG\Response(
      *     response=200,
-     *     description="Returns the motifInactivation",
+     *     description="Retourner  motifInactivation",
      * )
      * @SWG\Tag(name="Referentiel")
      * @return array
@@ -512,12 +523,12 @@ class ReferentielController extends Controller
     /**
      * Récupèrer la liste des nets.
      *
-     * @FOSRest\View(populateDefaultVars=false, serializerGroups={"net"})
+     * @FOSRest\View(populateDefaultVars=false)
      * @FOSRest\Get("/nets")
      *
      * @SWG\Response(
      *     response=200,
-     *     description="Returns the nets",
+     *     description="Retourner  nets",
      *     @SWG\Schema(
      *         type="array",
      *         @SWG\Items(ref=@Model(type=Net::class))
@@ -540,7 +551,7 @@ class ReferentielController extends Controller
 
         $repository = $this->getDoctrine()->getRepository(Net::class);
 
-        // query for a single Product by its primary key (usually "id")
+
         $nets = $repository->findBy([],['libelle'=>$sort], $limit, $offset);
 
         return View::create($nets, Response::HTTP_OK );
@@ -550,12 +561,12 @@ class ReferentielController extends Controller
      * Récupèrer une net.
      *
      * @ParamConverter("net", class="App:Net")
-     * @FOSRest\View(populateDefaultVars=false, serializerGroups={"net"})
+     * @FOSRest\View(populateDefaultVars=false)
      * @FOSRest\Get("/nets/{id}")
      *
      * @SWG\Response(
      *     response=200,
-     *     description="Returns the net",
+     *     description="Retourner  net",
      * )
      * @SWG\Tag(name="Referentiel")
      * @return array
@@ -572,12 +583,12 @@ class ReferentielController extends Controller
     /**
      * Récupèrer la liste des pays.
      *
-     * @FOSRest\View(populateDefaultVars=false, serializerGroups={"pays"})
+     * @FOSRest\View(populateDefaultVars=false)
      * @FOSRest\Get("/pays")
      *
      * @SWG\Response(
      *     response=200,
-     *     description="Returns the pays",
+     *     description="Retourner  pays",
      *     @SWG\Schema(
      *         type="array",
      *         @SWG\Items(ref=@Model(type=Pays::class))
@@ -600,7 +611,7 @@ class ReferentielController extends Controller
 
         $repository = $this->getDoctrine()->getRepository(Pays::class);
 
-        // query for a single Product by its primary key (usually "id")
+
         $pays = $repository->findBy([],['libelle'=>$sort], $limit, $offset);
 
         return View::create($pays, Response::HTTP_OK );
@@ -610,12 +621,12 @@ class ReferentielController extends Controller
      * Récupèrer une pays.
      *
      * @ParamConverter("pays", class="App:Pays")
-     * @FOSRest\View(populateDefaultVars=false, serializerGroups={"pays"})
+     * @FOSRest\View(populateDefaultVars=false)
      * @FOSRest\Get("/pays/{id}")
      *
      * @SWG\Response(
      *     response=200,
-     *     description="Returns the pays",
+     *     description="Retourner  pays",
      * )
      * @SWG\Tag(name="Referentiel")
      * @return array
@@ -631,12 +642,12 @@ class ReferentielController extends Controller
     /**
      * Récupèrer la liste des sourceDonneess.
      *
-     * @FOSRest\View(populateDefaultVars=false, serializerGroups={"sourceDonnees"})
+     * @FOSRest\View(populateDefaultVars=false)
      * @FOSRest\Get("/sourceDonneess")
      *
      * @SWG\Response(
      *     response=200,
-     *     description="Returns the sourceDonneess",
+     *     description="Retourner  sourceDonneess",
      *     @SWG\Schema(
      *         type="array",
      *         @SWG\Items(ref=@Model(type=SourceDonnees::class))
@@ -659,7 +670,7 @@ class ReferentielController extends Controller
 
         $repository = $this->getDoctrine()->getRepository(SourceDonnees::class);
 
-        // query for a single Product by its primary key (usually "id")
+
         $sourceDonneess = $repository->findBy([],['libelle'=>$sort], $limit, $offset);
 
         return View::create($sourceDonneess, Response::HTTP_OK );
@@ -669,12 +680,12 @@ class ReferentielController extends Controller
      * Récupèrer une sourceDonnees.
      *
      * @ParamConverter("sourceDonnees", class="App:SourceDonnees")
-     * @FOSRest\View(populateDefaultVars=false, serializerGroups={"sourceDonnees"})
+     * @FOSRest\View(populateDefaultVars=false)
      * @FOSRest\Get("/sourceDonneess/{id}")
      *
      * @SWG\Response(
      *     response=200,
-     *     description="Returns the sourceDonnees",
+     *     description="Retourner  sourceDonnees",
      * )
      * @SWG\Tag(name="Referentiel")
      * @return array
@@ -688,4 +699,19 @@ class ReferentielController extends Controller
         return View::create($sourceDonnees, Response::HTTP_OK );
     }
 
+    public function getRequestParameter($request, &$criteriaArray)
+    {
+        if(!empty($request->get('id')) && !empty($request->get('code'))){
+
+            return View::create(['message' => 'Must fill id or code, not both !'], Response::HTTP_BAD_REQUEST);
+
+        } elseif(!empty($request->get('id'))) {
+            $criteriaArray['id']=$request->get('id');
+        } elseif (!empty($request->get('code'))) {
+            $criteriaArray['code'] = $request->get('code');
+        } else {
+            return View::create(['message' => 'Must fill one parameter : id or code !'], Response::HTTP_BAD_REQUEST);
+        }
+
+    }
 }

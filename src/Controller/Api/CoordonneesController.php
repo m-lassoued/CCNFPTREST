@@ -30,7 +30,7 @@ class CoordonneesController extends Controller
      *
      * @SWG\Response(
      *     response=200,
-     *     description="Returns the coordonneess",
+     *     description="Retourner  coordonneess",
      *     @SWG\Schema(
      *         type="array",
      *         @SWG\Items(ref=@Model(type=Coordonnees::class))
@@ -53,7 +53,7 @@ class CoordonneesController extends Controller
 
         $repository = $this->getDoctrine()->getRepository(Coordonnees::class);
 
-        // query for a single Product by its primary key (usually "id")
+
         $coordonneess = $repository->findBy([],['adresseEPrincipale'=>$sort], $limit, $offset);
 
         return View::create($coordonneess, Response::HTTP_OK );
@@ -68,7 +68,7 @@ class CoordonneesController extends Controller
      *
      * @SWG\Response(
      *     response=200,
-     *     description="Returns the coordonnees",
+     *     description="Retourner  coordonnees",
      * )
      * @SWG\Tag(name="coordonneess")
      * @return array
@@ -89,7 +89,7 @@ class CoordonneesController extends Controller
      *
      * @SWG\Response(
      *     response=200,
-     *     description="Returns the coordonneess",
+     *     description="Retourner  coordonneess",
      *     @SWG\Schema(
      *         type="array",
      *         @SWG\Items(ref=@Model(type=Coordonnees::class))
@@ -137,7 +137,7 @@ class CoordonneesController extends Controller
      *
      * @SWG\Response(
      *     response=200,
-     *     description="Returns the coordonnees updated",
+     *     description="Retourner  coordonnees updated",
      *     @SWG\Schema(
      *         type="array",
      *         @SWG\Items(ref=@Model(type=Coordonnees::class))
@@ -170,7 +170,7 @@ class CoordonneesController extends Controller
      *
      * @SWG\Response(
      *     response=200,
-     *     description="Returns the coordonnees patched",
+     *     description="Retourner  coordonnees patched",
      *     @SWG\Schema(
      *         type="array",
      *         @SWG\Items(ref=@Model(type=Coordonnees::class))
@@ -231,7 +231,7 @@ class CoordonneesController extends Controller
      *
      * @SWG\Response(
      *     response=200,
-     *     description="Returns the if coordonnees was deleted"
+     *     description="Retourner  if coordonnees was deleted"
      * )
      *
      * @SWG\Tag(name="coordonneess")

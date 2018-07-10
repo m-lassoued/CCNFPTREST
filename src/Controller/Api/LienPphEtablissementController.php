@@ -30,7 +30,7 @@ class LienPphEtablissementController extends Controller
      *
      * @SWG\Response(
      *     response=200,
-     *     description="Returns the lienPphEtablissements",
+     *     description="Retourner  lienPphEtablissements",
      *     @SWG\Schema(
      *         type="array",
      *         @SWG\Items(ref=@Model(type=LienPphEtablissement::class))
@@ -53,7 +53,7 @@ class LienPphEtablissementController extends Controller
 
         $repository = $this->getDoctrine()->getRepository(LienPphEtablissement::class);
 
-        // query for a single Product by its primary key (usually "id")
+
         $lienPphEtablissements = $repository->findBy([],['dateDebut'=>$sort], $limit, $offset);
 
         return View::create($lienPphEtablissements, Response::HTTP_OK );
@@ -68,7 +68,7 @@ class LienPphEtablissementController extends Controller
      *
      * @SWG\Response(
      *     response=200,
-     *     description="Returns the lienPphEtablissement",
+     *     description="Retourner  lienPphEtablissement",
      * )
      * @SWG\Tag(name="lienPphEtablissements")
      * @return array
@@ -89,7 +89,7 @@ class LienPphEtablissementController extends Controller
      *
      * @SWG\Response(
      *     response=200,
-     *     description="Returns the lienPphEtablissements",
+     *     description="Retourner  lienPphEtablissements",
      *     @SWG\Schema(
      *         type="array",
      *         @SWG\Items(ref=@Model(type=LienPphEtablissement::class))
@@ -137,7 +137,7 @@ class LienPphEtablissementController extends Controller
      *
      * @SWG\Response(
      *     response=200,
-     *     description="Returns the lienPphEtablissement updated",
+     *     description="Retourner  lienPphEtablissement updated",
      *     @SWG\Schema(
      *         type="array",
      *         @SWG\Items(ref=@Model(type=LienPphEtablissement::class))
@@ -170,7 +170,7 @@ class LienPphEtablissementController extends Controller
      *
      * @SWG\Response(
      *     response=200,
-     *     description="Returns the lienPphEtablissement patched",
+     *     description="Retourner  lienPphEtablissement patched",
      *     @SWG\Schema(
      *         type="array",
      *         @SWG\Items(ref=@Model(type=LienPphEtablissement::class))
@@ -231,7 +231,7 @@ class LienPphEtablissementController extends Controller
      *
      * @SWG\Response(
      *     response=200,
-     *     description="Returns the if lienPphEtablissement was deleted"
+     *     description="Retourner  if lienPphEtablissement was deleted"
      * )
      *
      * @SWG\Tag(name="lienPphEtablissements")

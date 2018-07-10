@@ -3,6 +3,8 @@
 namespace App\Controller\Api;
 
 use App\Form\PphType;
+use App\Service\ResponseApi;
+use Doctrine\Common\Collections\Collection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,14 +32,14 @@ class PphController extends Controller
      *
      * @SWG\Response(
      *     response=200,
-     *     description="Returns the pphs",
+     *     description="Retourner  pphs",
      *     @SWG\Schema(
      *         type="array",
      *         @SWG\Items(ref=@Model(type=Pph::class))
      *     )
      * )
-     * @SWG\Parameter(name="offset",in="query",type="integer",description="Index de début de la pagination", allowEmptyValue=false, format="\d+")
-     * @SWG\Parameter(name="limit",in="query",type="integer",description="Nombre d'éléments à afficher", allowEmptyValue=false, format="\d+")
+     * @SWG\Parameter(name="offset",in="query",type="integer",description="Index de début de la pagination", required=true, format="\d+")
+     * @SWG\Parameter(name="limit",in="query",type="integer",description="Nombre d'éléments à afficher", required=true, format="\d+")
      * @SWG\Parameter(name="sort",in="query",type="string",description="Ordre de tri (basé sur le nom)",format="(asc|desc)")
      *
      * @SWG\Tag(name="pphs")
@@ -53,10 +55,50 @@ class PphController extends Controller
 
         $repository = $this->getDoctrine()->getRepository(Pph::class);
         
-        // query for a single Product by its primary key (usually "id")
+
         $pphs = $repository->findBy([],['nomUsage'=>$sort], $limit, $offset);
 
         return View::create($pphs, Response::HTTP_OK );
+    }
+    /**
+     * Rechercher une Personne Physique via Nom de naissance, Prénom et Date de naissance.
+     *
+     * @FOSRest\View(populateDefaultVars=false)
+     * @FOSRest\Get("/pphs/recherche_par_nom_prenom_dateNaissance")
+     *
+     * @SWG\Response(
+     *     response=200,
+     *     description="Retourner  pphs",
+     *     @SWG\Schema(
+     *         type="array",
+     *         @SWG\Items(ref=@Model(type=Pph::class))
+     *     )
+     * )
+
+     * @SWG\Parameter(name="nom",in="query",type="string",description="Nom de naissance", required=true)
+     * @SWG\Parameter(name="prenom",in="query",type="string",description="Prénom", required=true)
+     * @SWG\Parameter(name="date_naissance",in="query",type="string",description="Date de naissance",format="dd-mm-YY", required=true)
+     *
+     * @SWG\Tag(name="pphs")
+     *
+     * @return array
+     */
+    public function getPphsByNomPrenomDateNaissanceAction(Request $request)
+    {
+        $nom = strtoupper($request->get('nom'));
+        $prenom = strtoupper($request->get('prenom'));
+        $dateNaissance = new \DateTime($request->get('date_naissance'));
+
+        $repository = $this->getDoctrine()->getRepository(Pph::class);
+
+
+        $pphsIds =  $repository->findByNomPrenomDateNaissance($nom, $prenom, $dateNaissance);
+
+        if(!count($pphsIds)){
+            return View::create(ResponseApi::create(ResponseApi::ERROR_CODE_PPH_INTROUVABLE), Response::HTTP_NOT_FOUND );
+        }
+
+        return View::create(ResponseApi::create(ResponseApi::CODE_OK, $pphsIds), Response::HTTP_OK );
     }
 
     /**
@@ -68,7 +110,7 @@ class PphController extends Controller
      *
      * @SWG\Response(
      *     response=200,
-     *     description="Returns the pph",
+     *     description="Retourner  pph",
      * )
      * @SWG\Tag(name="pphs")
      * @return array
@@ -89,7 +131,7 @@ class PphController extends Controller
      *
      * @SWG\Response(
      *     response=200,
-     *     description="Returns the pphs",
+     *     description="Retourner  pphs",
      *     @SWG\Schema(
      *         type="array",
      *         @SWG\Items(ref=@Model(type=Pph::class))
@@ -137,7 +179,7 @@ class PphController extends Controller
      *
      * @SWG\Response(
      *     response=200,
-     *     description="Returns the pph updated",
+     *     description="Retourner  pph updated",
      *     @SWG\Schema(
      *         type="array",
      *         @SWG\Items(ref=@Model(type=Pph::class))
@@ -170,7 +212,7 @@ class PphController extends Controller
      *
      * @SWG\Response(
      *     response=200,
-     *     description="Returns the pph patched",
+     *     description="Retourner  pph patched",
      *     @SWG\Schema(
      *         type="array",
      *         @SWG\Items(ref=@Model(type=Pph::class))
@@ -231,7 +273,7 @@ class PphController extends Controller
      *
      * @SWG\Response(
      *     response=200,
-     *     description="Returns the if pph was deleted"
+     *     description="Retourner  if pph was deleted"
      * )
      *
      * @SWG\Tag(name="pphs")

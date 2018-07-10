@@ -30,7 +30,7 @@ class EtablissementController extends Controller
      *
      * @SWG\Response(
      *     response=200,
-     *     description="Returns the etablissements",
+     *     description="Retourner  etablissements",
      *     @SWG\Schema(
      *         type="array",
      *         @SWG\Items(ref=@Model(type=Etablissement::class))
@@ -53,7 +53,7 @@ class EtablissementController extends Controller
 
         $repository = $this->getDoctrine()->getRepository(Etablissement::class);
 
-        // query for a single Product by its primary key (usually "id")
+
         $etablissements = $repository->findBy([],['nom'=>$sort], $limit, $offset);
 
         return View::create($etablissements, Response::HTTP_OK );
@@ -68,7 +68,7 @@ class EtablissementController extends Controller
      *
      * @SWG\Response(
      *     response=200,
-     *     description="Returns the etablissement",
+     *     description="Retourner  etablissement",
      * )
      * @SWG\Tag(name="etablissements")
      * @return array
@@ -89,7 +89,7 @@ class EtablissementController extends Controller
      *
      * @SWG\Response(
      *     response=200,
-     *     description="Returns the etablissements",
+     *     description="Retourner  etablissements",
      *     @SWG\Schema(
      *         type="array",
      *         @SWG\Items(ref=@Model(type=Etablissement::class))
@@ -137,7 +137,7 @@ class EtablissementController extends Controller
      *
      * @SWG\Response(
      *     response=200,
-     *     description="Returns the etablissement updated",
+     *     description="Retourner  etablissement updated",
      *     @SWG\Schema(
      *         type="array",
      *         @SWG\Items(ref=@Model(type=Etablissement::class))
@@ -170,7 +170,7 @@ class EtablissementController extends Controller
      *
      * @SWG\Response(
      *     response=200,
-     *     description="Returns the etablissement patched",
+     *     description="Retourner  etablissement patched",
      *     @SWG\Schema(
      *         type="array",
      *         @SWG\Items(ref=@Model(type=Etablissement::class))
@@ -231,7 +231,7 @@ class EtablissementController extends Controller
      *
      * @SWG\Response(
      *     response=200,
-     *     description="Returns the if etablissement was deleted"
+     *     description="Retourner  if etablissement was deleted"
      * )
      *
      * @SWG\Tag(name="etablissements")

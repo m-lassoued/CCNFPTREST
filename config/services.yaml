@@ -37,3 +37,7 @@ services:
         arguments: ['@doctrine.orm.entity_manager','%model.client.class%']
         autowire: true
         public: true
+    listener:
+        class: Doctrine\DBAL\Event\Listeners\OracleSessionInit
+        tags:
+            - { name: doctrine.event_listener, event: postConnect }

@@ -30,7 +30,7 @@ class PersonneMoraleController extends Controller
      *
      * @SWG\Response(
      *     response=200,
-     *     description="Returns the personneMorales",
+     *     description="Retourner  personneMorales",
      *     @SWG\Schema(
      *         type="array",
      *         @SWG\Items(ref=@Model(type=PersonneMorale::class))
@@ -53,7 +53,7 @@ class PersonneMoraleController extends Controller
 
         $repository = $this->getDoctrine()->getRepository(PersonneMorale::class);
 
-        // query for a single Product by its primary key (usually "id")
+
         $personneMorales = $repository->findBy([],['nom'=>$sort], $limit, $offset);
 
         return View::create($personneMorales, Response::HTTP_OK );
@@ -68,7 +68,7 @@ class PersonneMoraleController extends Controller
      *
      * @SWG\Response(
      *     response=200,
-     *     description="Returns the personneMorale",
+     *     description="Retourner  personneMorale",
      * )
      * @SWG\Tag(name="personneMorales")
      * @return array
@@ -89,7 +89,7 @@ class PersonneMoraleController extends Controller
      *
      * @SWG\Response(
      *     response=200,
-     *     description="Returns the personneMorales",
+     *     description="Retourner  personneMorales",
      *     @SWG\Schema(
      *         type="array",
      *         @SWG\Items(ref=@Model(type=PersonneMorale::class))
@@ -137,7 +137,7 @@ class PersonneMoraleController extends Controller
      *
      * @SWG\Response(
      *     response=200,
-     *     description="Returns the personneMorale updated",
+     *     description="Retourner  personneMorale updated",
      *     @SWG\Schema(
      *         type="array",
      *         @SWG\Items(ref=@Model(type=PersonneMorale::class))
@@ -170,7 +170,7 @@ class PersonneMoraleController extends Controller
      *
      * @SWG\Response(
      *     response=200,
-     *     description="Returns the personneMorale patched",
+     *     description="Retourner  personneMorale patched",
      *     @SWG\Schema(
      *         type="array",
      *         @SWG\Items(ref=@Model(type=PersonneMorale::class))
@@ -231,7 +231,7 @@ class PersonneMoraleController extends Controller
      *
      * @SWG\Response(
      *     response=200,
-     *     description="Returns the if personneMorale was deleted"
+     *     description="Retourner  if personneMorale was deleted"
      * )
      *
      * @SWG\Tag(name="personneMorales")
