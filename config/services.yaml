@@ -41,3 +41,8 @@ services:
         class: Doctrine\DBAL\Event\Listeners\OracleSessionInit
         tags:
             - { name: doctrine.event_listener, event: postConnect }
+
+    pphs_view_handler:
+        public: true
+        class: App\Representation\PphsViewHandler
+        arguments: ['@router', '@fos_rest.view_handler.default']

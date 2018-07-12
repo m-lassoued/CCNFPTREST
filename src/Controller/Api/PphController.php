@@ -2,9 +2,14 @@
 
 namespace App\Controller\Api;
 
+use App\Entity\PphSearch2;
+use App\Representation\Pphs;
+use FOS\RestBundle\Controller\FOSRestController;
 use App\Form\PphType;
 use App\Service\ResponseApi;
+use App\Service\ValidateParameters;
 use Doctrine\Common\Collections\Collection;
+use FOS\RestBundle\Request\ParamFetcherInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,20 +20,46 @@ use FOS\RestBundle\Controller\Annotations as FOSRest;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Swagger\Annotations as SWG;
 use App\Entity\Pph;
+use App\Entity\Search\PphSearch;
+use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 /**
  * Brand controller.
  *
  * @Route("/api")
  */
-class PphController extends Controller
+class PphController extends FOSRestController
 {
 
     /**
      * Récupèrer la liste des personnes physiques.
      *
      * @FOSRest\View(populateDefaultVars=false, serializerGroups={"pph"})
-     * @FOSRest\Get("/pphs")
+     * @FOSRest\Get("/pphs", name="app_api_pphs")
+     * @FOSRest\QueryParam(
+     *     name="keyword",
+     *     requirements="[a-zA-Z0-9]+",
+     *     nullable=true,
+     *     description="The keyword to search for."
+     * )
+     * @FOSRest\QueryParam(
+     *     name="sort",
+     *     requirements="asc|desc",
+     *     default="asc",
+     *     description="Sort order (asc or desc)."
+     * )
+     * @FOSRest\QueryParam(
+     *     name="limit",
+     *     requirements="\d+",
+     *     default="20",
+     *     description="Max number of categories per page."
+     * )
+     * @FOSRest\QueryParam(
+     *     name="offset",
+     *     requirements="\d+",
+     *     default="0",
+     * description="The pagination offset."
+     * )
      *
      * @SWG\Response(
      *     response=200,
@@ -38,57 +69,61 @@ class PphController extends Controller
      *         @SWG\Items(ref=@Model(type=Pph::class))
      *     )
      * )
-     * @SWG\Parameter(name="offset",in="query",type="integer",description="Index de début de la pagination", required=true, format="\d+")
-     * @SWG\Parameter(name="limit",in="query",type="integer",description="Nombre d'éléments à afficher", required=true, format="\d+")
-     * @SWG\Parameter(name="sort",in="query",type="string",description="Ordre de tri (basé sur le nom)",format="(asc|desc)")
-     *
      * @SWG\Tag(name="pphs")
      *
      * @return array
      */
-    public function getPphsAction(Request $request)
+    public function getPphsAction(ParamFetcherInterface $paramFetcher)
     {
-
-        $offset = $request->get('offset');
-        $limit = $request->get('limit');
-        $sort = $request->get('sort')?$request->get('sort'):'asc';
-
         $repository = $this->getDoctrine()->getRepository(Pph::class);
-        
 
-        $pphs = $repository->findBy([],['nomUsage'=>$sort], $limit, $offset);
+        $pphs = $repository->search(
+            $paramFetcher->get('keyword'), $paramFetcher->get('sort'), $paramFetcher->get('limit'),
+            $paramFetcher->get('offset')
+        );
 
-        return View::create($pphs, Response::HTTP_OK );
+        return $this->get('pphs_view_handler')
+            ->handleRepresentation(new Pphs($pphs), $paramFetcher->all())
+            ;
     }
     /**
      * Rechercher une Personne Physique via Nom de naissance, Prénom et Date de naissance.
      *
      * @FOSRest\View(populateDefaultVars=false)
-     * @FOSRest\Get("/pphs/recherche_par_nom_prenom_dateNaissance")
+     * @FOSRest\Post("/pphs/recherche_par_nom_prenom_dateNaissance")
+     *
+     * @ParamConverter("pphsearch", class="App\Entity\Search\PphSearch", converter="fos_rest.request_body")
+     *
+     * @SWG\Parameter(
+     *    name="body",
+     *    in="body",
+     *    @SWG\Schema(
+     *       type="object",
+     *        @Model(type=PphSearch::class)
+     *    )
+     *
+     * )
      *
      * @SWG\Response(
      *     response=200,
      *     description="Retourner  pphs",
-     *     @SWG\Schema(
-     *         type="array",
-     *         @SWG\Items(ref=@Model(type=Pph::class))
-     *     )
      * )
-
-     * @SWG\Parameter(name="nom",in="query",type="string",description="Nom de naissance", required=true)
-     * @SWG\Parameter(name="prenom",in="query",type="string",description="Prénom", required=true)
-     * @SWG\Parameter(name="date_naissance",in="query",type="string",description="Date de naissance",format="dd-mm-YY", required=true)
      *
      * @SWG\Tag(name="pphs")
-     *
-     * @return array
-     */
-    public function getPphsByNomPrenomDateNaissanceAction(Request $request)
+     **/
+    public function getPphsByNomPrenomDateNaissanceAction (Request $request,  ConstraintViolationListInterface $violations)
     {
+        if($errors = ValidateParameters::checkViolations($violations)){
+            return View::create(ResponseApi::create(ResponseApi::ERROR_CODE_PARAM_FORMAT, $errors), Response::HTTP_BAD_REQUEST );
+        }
+        $required = ["nom","prenom","dateNaissance"];
+        if(!ValidateParameters::checkRequiredParams($request, $required)){
+            return View::create(ResponseApi::create(ResponseApi::ERROR_CODE_PARAM_REQUI), Response::HTTP_BAD_REQUEST );
+        }
         $nom = strtoupper($request->get('nom'));
         $prenom = strtoupper($request->get('prenom'));
-        $dateNaissance = new \DateTime($request->get('date_naissance'));
-
+        $dateNaissance = new \DateTime(str_replace('/','-',$request->get('dateNaissance')));
+        $dateNaissance->format('d-m-Y');
         $repository = $this->getDoctrine()->getRepository(Pph::class);
 
 

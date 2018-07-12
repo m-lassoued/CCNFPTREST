@@ -1,0 +1,6 @@
+[
+    {% for pph in pphs %}
+    {{ include('AppBundle:Pph:pph.json.twig') }}
+    {{ not loop.last ? ',' : '' }}
+    {% endfor %}
+]
