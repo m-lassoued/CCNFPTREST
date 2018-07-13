@@ -36,13 +36,15 @@ class PphRepository extends AbstractRepository
             ->andWhere('pph.nomNaissanceCondense = :nom')
             ->andWhere('pph.prenomNaissanceCondense = :prenom')
             ->andWhere('pph.dateNaissance = :dateNaissance')
+            ->andWhere('pph.idEtatPph = 1')
             ->setParameter('nom', $nom)
             ->setParameter('prenom', $prenom)
             ->setParameter('dateNaissance', $dateNaissance)
             ->orderBy('pph.nomNaissance', 'ASC')
-            ->orderBy('pph.prenom', 'ASC')
-            ->orderBy('pph.dateNaissance', 'ASC')
-            ->orderBy('pph.idEtatPph', 'ASC')
+            ->addOrderBy('pph.prenom', 'ASC')
+            ->addOrderBy('pph.dateNaissance', 'ASC')
+            ->addOrderBy('pph.idEtatPph', 'ASC')
+            ->addOrderBy('pph.id', 'ASC')
             ->getQuery()
             ->getArrayResult();
         foreach ($pphs as $pph){

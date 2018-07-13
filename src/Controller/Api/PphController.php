@@ -110,22 +110,20 @@ class PphController extends FOSRestController
      * )
      *
      * @SWG\Tag(name="pphs")
+     *
      **/
     public function getPphsByNomPrenomDateNaissanceAction (Request $request,  ConstraintViolationListInterface $violations)
     {
-        if($errors = ValidateParameters::checkViolations($violations)){
-            return View::create(ResponseApi::create(ResponseApi::ERROR_CODE_PARAM_FORMAT, $errors), Response::HTTP_BAD_REQUEST );
-        }
         $required = ["nom","prenom","dateNaissance"];
-        if(!ValidateParameters::checkRequiredParams($request, $required)){
-            return View::create(ResponseApi::create(ResponseApi::ERROR_CODE_PARAM_REQUI), Response::HTTP_BAD_REQUEST );
+        if($checkParamsResponse = ValidateParameters::checkParams($request, $violations, $required)){
+            return $checkParamsResponse;
         }
-        $nom = strtoupper($request->get('nom'));
-        $prenom = strtoupper($request->get('prenom'));
+
+        $nom = strtoupper(str_replace(' ','',$request->get('nom')));
+        $prenom = strtoupper(str_replace(' ','',$request->get('prenom')));
         $dateNaissance = new \DateTime(str_replace('/','-',$request->get('dateNaissance')));
         $dateNaissance->format('d-m-Y');
         $repository = $this->getDoctrine()->getRepository(Pph::class);
-
 
         $pphsIds =  $repository->findByNomPrenomDateNaissance($nom, $prenom, $dateNaissance);
 

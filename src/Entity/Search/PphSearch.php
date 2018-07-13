@@ -14,7 +14,7 @@ class PphSearch
      * @var string
      * @Serializer\Type("string")
      * @Serializer\Expose
-     * @Assert\NotBlank
+     * @Assert\NotBlank(message="Erreur : parametre Nom est requie")
      * @Assert\Length(min=2, max=50)
      */
     private $nom;
