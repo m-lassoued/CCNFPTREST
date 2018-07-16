@@ -67,6 +67,16 @@ class LienPphEtablissement
     private $idTypeLienPe;
 
     /**
+     * @var Coordonnees
+     *
+     * @ORM\ManyToOne(targetEntity="Coordonnees")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="ID_COORDONNEES", referencedColumnName="ID")
+     * })
+     */
+    private $idCoordonnees;
+
+    /**
      * @return \DateTime|null
      */
     public function getDateDebut(): ?\DateTime
@@ -144,6 +154,22 @@ class LienPphEtablissement
     public function setIdTypeLienPe($idTypeLienPe): void
     {
         $this->idTypeLienPe = $idTypeLienPe;
+    }
+
+    /**
+     * @return null|Coordonnees
+     */
+    public function getIdCoordonnees(): ?Coordonnees
+    {
+        return $this->idCoordonnees;
+    }
+
+    /**
+     * @param Coordonnees $idCoordonnees
+     */
+    public function setIdCoordonnees(Coordonnees $idCoordonnees): void
+    {
+        $this->idCoordonnees = $idCoordonnees;
     }
 
 }

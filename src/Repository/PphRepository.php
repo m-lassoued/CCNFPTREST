@@ -53,5 +53,21 @@ class PphRepository extends AbstractRepository
 
         return $ids;
     }
+    public function findCompletePphByIdReferenceComptePortail($id, $referencePersonnePhysique, $idComptePortailAgent)
+    {
+        $pphQuery = $this->createQueryBuilder('pph');
+        if(!empty($id)){
+            $pphQuery->andWhere('pph.id = :id')
+                 ->setParameter('id', $id);
+        }
+        if(!empty($referencePersonnePhysique)){
+            $pphQuery->andWhere('pph.referencePersonnePhysique = :referencePersonnePhysique')
+                 ->setParameter('referencePersonnePhysique', $referencePersonnePhysique);
+        }
+
+        $pph = $pphQuery ->getQuery()->getOneOrNullResult();
+
+        return $pph;
+    }
 
 }

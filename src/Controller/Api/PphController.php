@@ -2,25 +2,26 @@
 
 namespace App\Controller\Api;
 
-use App\Entity\PphSearch2;
-use App\Representation\Pphs;
+use App\Entity\LienPphEtablissement;
+use App\Entity\PphHasPph;
 use FOS\RestBundle\Controller\FOSRestController;
-use App\Form\PphType;
 use App\Service\ResponseApi;
 use App\Service\ValidateParameters;
-use Doctrine\Common\Collections\Collection;
 use FOS\RestBundle\Request\ParamFetcherInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use FOS\RestBundle\View\View;
 use FOS\RestBundle\Controller\Annotations as FOSRest;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Swagger\Annotations as SWG;
+
 use App\Entity\Pph;
+use App\Form\PphType;
+use App\Representation\Pphs;
 use App\Entity\Search\PphSearch;
+use App\Entity\Search\PphComplet;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 
 /**
@@ -109,7 +110,7 @@ class PphController extends FOSRestController
      *     description="Retourner  pphs",
      * )
      *
-     * @SWG\Tag(name="pphs")
+     * @SWG\Tag(name="WS_P1++")
      *
      **/
     public function getPphsByNomPrenomDateNaissanceAction (Request $request,  ConstraintViolationListInterface $violations)
@@ -132,6 +133,66 @@ class PphController extends FOSRestController
         }
 
         return View::create(ResponseApi::create(ResponseApi::CODE_OK, $pphsIds), Response::HTTP_OK );
+    }
+
+    /**
+     * WS-R&C-CU-02.3 : Consulter une Personne Physique Complète (avec les objets associés) .
+     *
+     * @FOSRest\View(populateDefaultVars=false)
+     * @FOSRest\Post("/pphs/pph_complet")
+     *
+     * @ParamConverter("pphsearch", class="App\Entity\Search\PphComplet", converter="fos_rest.request_body")
+     *
+     * @SWG\Parameter(
+     *    name="body",
+     *    in="body",
+     *    @SWG\Schema(
+     *       type="object",
+     *        @Model(type=PphComplet::class)
+     *    )
+     *
+     * )
+     *
+     * @SWG\Response(
+     *     response=200,
+     *     description="Retourner  pph complet",
+     * )
+     *
+     * @SWG\Tag(name="WS_P1++")
+     *
+     **/
+    public function getCompletePphAction (Request $request,  ConstraintViolationListInterface $violations)
+    {
+        $required = ["idpph","referencePersonnePhysique"];
+        if($checkParamsResponse = ValidateParameters::checkParams($request, $violations, $required, false)){
+            return $checkParamsResponse;
+        }
+
+        $repository = $this->getDoctrine()->getRepository(Pph::class);
+        /** @var Pph $pph */
+        $pph =  $repository->findCompletePphByIdReferenceComptePortail($request->get('idpph'), $request->get('referencePersonnePhysique'), $request->get('idComptePortailAgent'));
+        $idComptePortailAgent = $request->get('idComptePortailAgent');
+        if(!$pph){
+
+            return View::create(ResponseApi::create(ResponseApi::ERROR_CODE_PPH_INTROUVABLE), Response::HTTP_NOT_FOUND );
+        } elseif(!empty($idComptePortailAgent) && $pph->getIdComptePortailAgent() != $idComptePortailAgent){
+
+            return View::create(ResponseApi::create(ResponseApi::ERROR_CODE_AGENT_NON_APPERE), Response::HTTP_NOT_FOUND );
+        } elseif (empty($pph->getIdEtatPph()) || $pph->getIdEtatPph()->getId()!= 1) {
+
+            return View::create(ResponseApi::create(ResponseApi::ERROR_CODE_PPH_INACTIVE), Response::HTTP_NOT_FOUND );
+        }
+        $lienPphPphs = $this->getDoctrine()->getRepository(PphHasPph::class)->findBy(["pphPph"=>$pph]);
+        $lienPphEtablissements = $this->getDoctrine()->getRepository(LienPphEtablissement::class)->findBy(["pph"=>$pph]);
+
+
+
+        return View::create(ResponseApi::create(ResponseApi::CODE_OK,
+                            ["pph"=>$pph,
+                             "pphHasPphs"=>$lienPphPphs,
+                             "lienPphEtablissements"=>$lienPphEtablissements
+                            ]),
+            Response::HTTP_OK );
     }
 
     /**

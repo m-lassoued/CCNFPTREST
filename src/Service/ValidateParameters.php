@@ -18,11 +18,12 @@ class ValidateParameters
      * @param Request $request
      * @param ConstraintViolationList $violations
      * @param array $required
+     * @param bool $checkAll
      * @return bool|View
      */
-    public static function checkParams($request,$violations, $required=[]){
+    public static function checkParams($request,$violations, $required=[], $checkAll=true){
 
-        if(!empty($required) && !self::checkRequiredParams($request, $required)){
+        if(!empty($required) && !self::checkRequiredParams($request, $required, $checkAll)){
             return View::create(ResponseApi::create(ResponseApi::ERROR_CODE_PARAM_REQUI), Response::HTTP_BAD_REQUEST );
         }
         if(!count($request->request->all())){
@@ -34,15 +35,21 @@ class ValidateParameters
 
         return false;
     }
-    public static function checkRequiredParams($request,$required){
-
+    public static function checkRequiredParams($request,$required, $checkAll=true){
+        $check = false;
         foreach ($required as $r) {
-            if(!$request->get($r)){
-                return false;
+            if ($checkAll) {
+                if(!$request->get($r)){
+                    return false;
+                }
+            } else {
+                if(!empty($request->get($r))){
+                    $check = true;
+                }
             }
         }
 
-        return true;
+        return $check;
     }
     public static function checkViolations($violations){
 
